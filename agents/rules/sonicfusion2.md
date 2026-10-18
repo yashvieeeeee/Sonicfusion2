@@ -1,0 +1,12 @@
+# SonicFusion 2 rules
+- Source of truth: docs/PLAN.md. If something conflicts with it, ask me before deviating.
+- Use the official FMA training/validation/test split at TRACK level. Never re-split. Never put windows of one track in two splits.
+- Normalization stats are fitted on training windows only and saved with the model.
+- Never invent, hardcode or estimate metrics. All numbers come from scripts writing to reports/metrics/*.json.
+- No mocked or random outputs in the API or UI. Unavailable features return an explicit "disabled" status.
+- Paths and hyperparameters live in configs/config.yaml, not in code.
+- Training and inference import the same preprocessing and model code.
+- Never commit data/, model weights, .venv or uploads.
+- Environment is already set up: do NOT install or upgrade packages without asking me.
+- Do NOT start long downloads or full training runs; give me the command and I run it.
+- Work on one gate at a time. After each task: list files changed, run the tests, and say what you did NOT verify.

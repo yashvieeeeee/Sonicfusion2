@@ -1,0 +1,16 @@
+@"
+.venv/
+__pycache__/
+.pytest_cache/
+.env
+data/
+models/
+*.pt
+*.joblib
+*.npy
+web/node_modules/
+web/.next/
+"@ | Out-File -Encoding utf8 .gitignore
+git init
+git add -A
+git status
