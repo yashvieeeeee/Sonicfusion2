@@ -1,0 +1,145 @@
+{
+  "timestamp": "2026-10-20T23:31:39.607917+00:00",
+  "min_track_seconds": 25.0,
+  "total_small_tracks_in_metadata": 8000,
+  "total_small_tracks_in_manifest": 7994,
+  "total_exclusions": 6,
+  "splits_metadata": {
+    "training": 6400,
+    "validation": 800,
+    "test": 800
+  },
+  "splits_manifest": {
+    "training": 6394,
+    "validation": 800,
+    "test": 800
+  },
+  "splits_exclusions": {
+    "training": 6,
+    "validation": 0,
+    "test": 0
+  },
+  "exclusions": [
+    {
+      "track_id": 98565,
+      "genre": "Hip-Hop",
+      "split": "training",
+      "file_size_bytes": 300753,
+      "decodable_seconds": 1.63,
+      "reason": "Decodable duration (1.63s) is below min_track_seconds (25.0s)"
+    },
+    {
+      "track_id": 98567,
+      "genre": "Hip-Hop",
+      "split": "training",
+      "file_size_bytes": 141545,
+      "decodable_seconds": 0.54,
+      "reason": "Decodable duration (0.54s) is below min_track_seconds (25.0s)"
+    },
+    {
+      "track_id": 98569,
+      "genre": "Hip-Hop",
+      "split": "training",
+      "file_size_bytes": 236749,
+      "decodable_seconds": 1.56,
+      "reason": "Decodable duration (1.56s) is below min_track_seconds (25.0s)"
+    },
+    {
+      "track_id": 99134,
+      "genre": "Electronic",
+      "split": "training",
+      "file_size_bytes": 1298,
+      "decodable_seconds": 0.0,
+      "reason": "Unreadable/corrupt MP3 (file size 1298 bytes, no decodable audio)"
+    },
+    {
+      "track_id": 108925,
+      "genre": "Rock",
+      "split": "training",
+      "file_size_bytes": 1371,
+      "decodable_seconds": 0.0,
+      "reason": "Unreadable/corrupt MP3 (file size 1371 bytes, no decodable audio)"
+    },
+    {
+      "track_id": 133297,
+      "genre": "Experimental",
+      "split": "training",
+      "file_size_bytes": 1752,
+      "decodable_seconds": 0.0,
+      "reason": "Unreadable/corrupt MP3 (file size 1752 bytes, no decodable audio)"
+    }
+  ],
+  "artist_overlap_limitation": {
+    "total_artists_in_manifest": 2307,
+    "missing_artist_id_count": 0,
+    "unique_artists_per_split": {
+      "training": 1886,
+      "validation": 219,
+      "test": 202
+    },
+    "artists_in_multiple_splits_count": 0,
+    "tracks_affected_count": 0,
+    "sample_multi_split_artists": {},
+    "note": "No artist_id appears in more than one split (measured from FMA metadata artist_id). Album-level and near-duplicate overlap were not checked."
+  },
+  "processed_tracks": 8000,
+  "valid_tracks": 7994,
+  "excluded_tracks": 6,
+  "splits": {
+    "training": 6394,
+    "validation": 800,
+    "test": 800
+  },
+  "genres": {
+    "Pop": 1000,
+    "Folk": 1000,
+    "Instrumental": 1000,
+    "International": 1000,
+    "Rock": 999,
+    "Experimental": 999,
+    "Electronic": 999,
+    "Hip-Hop": 997
+  },
+  "split_genre_matrix": {
+    "Electronic": {
+      "test": 100,
+      "training": 799,
+      "validation": 100
+    },
+    "Experimental": {
+      "test": 100,
+      "training": 799,
+      "validation": 100
+    },
+    "Folk": {
+      "test": 100,
+      "training": 800,
+      "validation": 100
+    },
+    "Hip-Hop": {
+      "test": 100,
+      "training": 797,
+      "validation": 100
+    },
+    "Instrumental": {
+      "test": 100,
+      "training": 800,
+      "validation": 100
+    },
+    "International": {
+      "test": 100,
+      "training": 800,
+      "validation": 100
+    },
+    "Pop": {
+      "test": 100,
+      "training": 800,
+      "validation": 100
+    },
+    "Rock": {
+      "test": 100,
+      "training": 799,
+      "validation": 100
+    }
+  }
+}

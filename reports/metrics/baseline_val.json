@@ -1,0 +1,130 @@
+{
+  "timestamp": "2026-10-20T22:03:37.664038+00:00",
+  "model_type": "RandomForestClassifier",
+  "random_state": 42,
+  "best_params": {
+    "n_estimators": 400,
+    "max_depth": null
+  },
+  "validation_macro_f1": 0.5092900741724102,
+  "validation_accuracy": 0.52375,
+  "validation_macro_precision": 0.5047086187079505,
+  "validation_macro_recall": 0.5237499999999999,
+  "classification_report": {
+    "Electronic": {
+      "precision": 0.4519230769230769,
+      "recall": 0.47,
+      "f1-score": 0.46078431372549017,
+      "support": 100.0
+    },
+    "Experimental": {
+      "precision": 0.5569620253164557,
+      "recall": 0.44,
+      "f1-score": 0.49162011173184356,
+      "support": 100.0
+    },
+    "Folk": {
+      "precision": 0.6031746031746031,
+      "recall": 0.76,
+      "f1-score": 0.672566371681416,
+      "support": 100.0
+    },
+    "Hip-Hop": {
+      "precision": 0.5581395348837209,
+      "recall": 0.72,
+      "f1-score": 0.62882096069869,
+      "support": 100.0
+    },
+    "Instrumental": {
+      "precision": 0.45555555555555555,
+      "recall": 0.41,
+      "f1-score": 0.43157894736842106,
+      "support": 100.0
+    },
+    "International": {
+      "precision": 0.5913978494623656,
+      "recall": 0.55,
+      "f1-score": 0.5699481865284974,
+      "support": 100.0
+    },
+    "Pop": {
+      "precision": 0.203125,
+      "recall": 0.13,
+      "f1-score": 0.15853658536585366,
+      "support": 100.0
+    },
+    "Rock": {
+      "precision": 0.6173913043478261,
+      "recall": 0.71,
+      "f1-score": 0.6604651162790698,
+      "support": 100.0
+    },
+    "accuracy": 0.52375,
+    "macro avg": {
+      "precision": 0.5047086187079505,
+      "recall": 0.5237499999999999,
+      "f1-score": 0.5092900741724102,
+      "support": 800.0
+    },
+    "weighted avg": {
+      "precision": 0.5047086187079505,
+      "recall": 0.52375,
+      "f1-score": 0.5092900741724102,
+      "support": 800.0
+    }
+  },
+  "top_feature_importances": {
+    "onset_strength_mean": 0.04557444793525664,
+    "onset_strength_std": 0.032455731551784744,
+    "mfcc_1_mean": 0.029600653324533748,
+    "spectral_centroid_mean": 0.027240490951594035,
+    "spectral_bandwidth_mean": 0.026155759625715046,
+    "spectral_rolloff_mean": 0.024975506084619264,
+    "rms_std": 0.023513748105772135,
+    "spectral_centroid_std": 0.023423680737901673,
+    "rms_mean": 0.022891552491943887,
+    "zero_crossing_rate_mean": 0.02205287640110901,
+    "mfcc_4_mean": 0.021359437358205054,
+    "mfcc_3_mean": 0.02022825631217895,
+    "chroma_11_mean": 0.02008523526031155,
+    "mfcc_2_mean": 0.019660472477715005,
+    "mfcc_13_std": 0.019654360897653735
+  },
+  "grid_search_history": [
+    {
+      "params": {
+        "n_estimators": 200,
+        "max_depth": 12
+      },
+      "macro_f1": 0.4811560807473405,
+      "accuracy": 0.495
+    },
+    {
+      "params": {
+        "n_estimators": 200,
+        "max_depth": null
+      },
+      "macro_f1": 0.5047104454372842,
+      "accuracy": 0.52125
+    },
+    {
+      "params": {
+        "n_estimators": 400,
+        "max_depth": 12
+      },
+      "macro_f1": 0.4874639825014665,
+      "accuracy": 0.5025
+    },
+    {
+      "params": {
+        "n_estimators": 400,
+        "max_depth": null
+      },
+      "macro_f1": 0.5092900741724102,
+      "accuracy": 0.52375
+    }
+  ],
+  "num_train_samples": 6394,
+  "num_val_samples": 800,
+  "note": "Evaluated strictly on the official FMA validation split. The test split was not evaluated."
+}

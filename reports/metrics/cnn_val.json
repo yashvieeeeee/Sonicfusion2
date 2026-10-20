@@ -1,0 +1,101 @@
+{
+  "timestamp": "2026-10-20T23:37:45.012246+00:00",
+  "status": "interrupted",
+  "error_info": null,
+  "model_architecture": "GenreCNN (3-block 2D CNN)",
+  "num_classes": 8,
+  "class_names": [
+    "Electronic",
+    "Experimental",
+    "Folk",
+    "Hip-Hop",
+    "Instrumental",
+    "International",
+    "Pop",
+    "Rock"
+  ],
+  "best_epoch": 1,
+  "epochs_run": 1,
+  "epochs_configured": 25,
+  "best_validation_macro_f1": 0.36388411041966373,
+  "classification_report": {
+    "Electronic": {
+      "precision": 0.44,
+      "recall": 0.11,
+      "f1-score": 0.176,
+      "support": 100.0
+    },
+    "Experimental": {
+      "precision": 0.5833333333333334,
+      "recall": 0.28,
+      "f1-score": 0.3783783783783784,
+      "support": 100.0
+    },
+    "Folk": {
+      "precision": 0.4,
+      "recall": 0.48,
+      "f1-score": 0.43636363636363634,
+      "support": 100.0
+    },
+    "Hip-Hop": {
+      "precision": 0.44366197183098594,
+      "recall": 0.63,
+      "f1-score": 0.5206611570247934,
+      "support": 100.0
+    },
+    "Instrumental": {
+      "precision": 0.4107142857142857,
+      "recall": 0.23,
+      "f1-score": 0.2948717948717949,
+      "support": 100.0
+    },
+    "International": {
+      "precision": 0.41139240506329117,
+      "recall": 0.65,
+      "f1-score": 0.5038759689922481,
+      "support": 100.0
+    },
+    "Pop": {
+      "precision": 0.10638297872340426,
+      "recall": 0.05,
+      "f1-score": 0.06802721088435375,
+      "support": 100.0
+    },
+    "Rock": {
+      "precision": 0.39705882352941174,
+      "recall": 0.81,
+      "f1-score": 0.5328947368421053,
+      "support": 100.0
+    },
+    "accuracy": 0.405,
+    "macro avg": {
+      "precision": 0.39906797477433903,
+      "recall": 0.405,
+      "f1-score": 0.36388411041966373,
+      "support": 800.0
+    },
+    "weighted avg": {
+      "precision": 0.399067974774339,
+      "recall": 0.405,
+      "f1-score": 0.3638841104196638,
+      "support": 800.0
+    }
+  },
+  "training_history": {
+    "train_loss": [
+      1.8070194012329317
+    ],
+    "val_loss": [
+      1.6265390209356945
+    ],
+    "val_macro_f1": [
+      0.36388411041966373
+    ],
+    "val_accuracy": [
+      0.405
+    ]
+  },
+  "num_train_tracks": 6394,
+  "num_val_tracks": 800,
+  "note": "Evaluated strictly on the official FMA validation split. The test split was not evaluated."
+}

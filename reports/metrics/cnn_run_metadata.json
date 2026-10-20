@@ -1,0 +1,127 @@
+{
+  "timestamp": "2026-10-20T23:37:45.022705+00:00",
+  "status": "interrupted",
+  "error_info": null,
+  "seed": 42,
+  "device": "cpu",
+  "epochs_configured": 25,
+  "epochs_run": 1,
+  "best_epoch": 1,
+  "early_stopped": false,
+  "git": {
+    "commit_hash": "9def811fc90e3781312729e22aac460dc24bf7ea",
+    "is_dirty": true
+  },
+  "package_versions": {
+    "python": "3.13.7",
+    "torch": "2.13.0+cpu",
+    "torchaudio": "2.11.0+cpu",
+    "librosa": "0.10.2",
+    "numpy": "2.5.3",
+    "scikit-learn": "1.8.0"
+  },
+  "sha256_hashes": {
+    "config": "5774d65bdb176352646144be28a82daf1fd3396b0bdf9af63283591445d33cb2",
+    "manifest": "8913b4e9d2529906c06caba472b616dea2e4dc0d30e1b0f4abad3f0b8fc06305",
+    "label_map": "243a645f735b478065420f4198aba31ee28d8852446714b3626196908f6d2227",
+    "norm_stats": "3bb4340b4d3efbef537b42f29a872a6e615549191dad34d854bc07c4f86328f3"
+  },
+  "label_to_idx": {
+    "Electronic": 0,
+    "Experimental": 1,
+    "Folk": 2,
+    "Hip-Hop": 3,
+    "Instrumental": 4,
+    "International": 5,
+    "Pop": 6,
+    "Rock": 7
+  },
+  "class_names": [
+    "Electronic",
+    "Experimental",
+    "Folk",
+    "Hip-Hop",
+    "Instrumental",
+    "International",
+    "Pop",
+    "Rock"
+  ],
+  "config_snapshot": {
+    "seed": 42,
+    "device": "auto",
+    "dataset": {
+      "min_track_seconds": 25.0
+    },
+    "paths": {
+      "data_root": "data",
+      "raw_dir": "data/raw",
+      "fma_small_dir": "data/raw/fma_small",
+      "fma_metadata_dir": "data/raw/fma_metadata",
+      "processed_dir": "data/processed",
+      "cache_dir": "data/cache",
+      "manifest_path": "data/processed/manifest.csv",
+      "features_path": "data/processed/features.parquet",
+      "label_map_path": "data/processed/label_map.json",
+      "norm_stats_path": "data/processed/norm_stats.json",
+      "similarity_index_path": "data/processed/similarity_index.joblib",
+      "spectrogram_cache_dir": "data/cache/logmels",
+      "models_dir": "models",
+      "baseline_model_path": "models/baseline/random_forest.joblib",
+      "cnn_checkpoint_path": "models/checkpoints/genre_cnn.pt",
+      "reports_dir": "reports",
+      "metrics_dir": "reports/metrics",
+      "figures_dir": "reports/figures",
+      "screenshots_dir": "reports/screenshots"
+    },
+    "audio": {
+      "sample_rate": 22050,
+      "duration": 30,
+      "window_duration": 10,
+      "windows_per_track": 3,
+      "n_mels": 128,
+      "n_fft": 2048,
+      "hop_length": 512,
+      "f_min": 0.0,
+      "f_max": null,
+      "power": 2.0,
+      "mono": true,
+      "max_duration_seconds": 900,
+      "max_upload_mb": 30,
+      "allowed_formats": [
+        "mp3",
+        "wav",
+        "m4a"
+      ]
+    },
+    "baseline": {
+      "random_state": 42,
+      "param_grid": {
+        "n_estimators": [
+          200,
+          400
+        ],
+        "max_depth": [
+          12,
+          null
+        ]
+      }
+    },
+    "cnn": {
+      "architecture": {
+        "in_channels": 1,
+        "dropout": 0.3
+      },
+      "training": {
+        "optimizer": "AdamW",
+        "learning_rate": 0.001,
+        "batch_size": 32,
+        "epochs": 25,
+        "early_stopping_patience": 5,
+        "weight_decay": 0.01
+      }
+    },
+    "similarity": {
+      "exact_match_threshold": 0.999
+    }
+  }
+}

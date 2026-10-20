@@ -1,0 +1,205 @@
+{
+  "timestamp": "2026-10-20T22:55:54.590571+00:00",
+  "catalog_size": 1500,
+  "similarity_metric": "Cosine Similarity",
+  "features_dimension": 51,
+  "evaluation_protocol": "Proxy diagnostic: Same-genre precision@5 on held-out validation tracks with self-exclusion",
+  "mean_same_genre_precision_at_5": 0.3603,
+  "per_genre_precision_at_5": {
+    "Electronic": 0.402,
+    "Experimental": 0.448,
+    "Folk": 0.408,
+    "Hip-Hop": 0.492,
+    "Instrumental": 0.248,
+    "International": 0.458,
+    "Pop": 0.09,
+    "Rock": 0.336
+  },
+  "sample_retrievals": [
+    {
+      "query_track_id": 148,
+      "query_genre": "Experimental",
+      "precision_at_k": 0.0,
+      "top_retrievals": [
+        {
+          "track_id": 35535,
+          "genre": "Rock",
+          "similarity": 0.5954,
+          "genre_match": false
+        },
+        {
+          "track_id": 47921,
+          "genre": "Rock",
+          "similarity": 0.5647,
+          "genre_match": false
+        },
+        {
+          "track_id": 24424,
+          "genre": "Hip-Hop",
+          "similarity": 0.549,
+          "genre_match": false
+        },
+        {
+          "track_id": 24432,
+          "genre": "Hip-Hop",
+          "similarity": 0.5286,
+          "genre_match": false
+        },
+        {
+          "track_id": 51923,
+          "genre": "Electronic",
+          "similarity": 0.5244,
+          "genre_match": false
+        }
+      ]
+    },
+    {
+      "query_track_id": 459,
+      "query_genre": "Rock",
+      "precision_at_k": 0.6,
+      "top_retrievals": [
+        {
+          "track_id": 37131,
+          "genre": "Electronic",
+          "similarity": 0.758,
+          "genre_match": false
+        },
+        {
+          "track_id": 32001,
+          "genre": "Rock",
+          "similarity": 0.7306,
+          "genre_match": true
+        },
+        {
+          "track_id": 3766,
+          "genre": "Rock",
+          "similarity": 0.7192,
+          "genre_match": true
+        },
+        {
+          "track_id": 30041,
+          "genre": "Hip-Hop",
+          "similarity": 0.7148,
+          "genre_match": false
+        },
+        {
+          "track_id": 42761,
+          "genre": "Rock",
+          "similarity": 0.711,
+          "genre_match": true
+        }
+      ]
+    },
+    {
+      "query_track_id": 602,
+      "query_genre": "Folk",
+      "precision_at_k": 0.8,
+      "top_retrievals": [
+        {
+          "track_id": 43962,
+          "genre": "Folk",
+          "similarity": 0.7676,
+          "genre_match": true
+        },
+        {
+          "track_id": 75435,
+          "genre": "Instrumental",
+          "similarity": 0.7384,
+          "genre_match": false
+        },
+        {
+          "track_id": 4068,
+          "genre": "Folk",
+          "similarity": 0.7238,
+          "genre_match": true
+        },
+        {
+          "track_id": 3271,
+          "genre": "Folk",
+          "similarity": 0.7089,
+          "genre_match": true
+        },
+        {
+          "track_id": 6782,
+          "genre": "Folk",
+          "similarity": 0.6978,
+          "genre_match": true
+        }
+      ]
+    },
+    {
+      "query_track_id": 690,
+      "query_genre": "Rock",
+      "precision_at_k": 0.4,
+      "top_retrievals": [
+        {
+          "track_id": 21422,
+          "genre": "Electronic",
+          "similarity": 0.7757,
+          "genre_match": false
+        },
+        {
+          "track_id": 45154,
+          "genre": "Electronic",
+          "similarity": 0.7732,
+          "genre_match": false
+        },
+        {
+          "track_id": 1039,
+          "genre": "Rock",
+          "similarity": 0.7622,
+          "genre_match": true
+        },
+        {
+          "track_id": 1040,
+          "genre": "Rock",
+          "similarity": 0.7261,
+          "genre_match": true
+        },
+        {
+          "track_id": 33064,
+          "genre": "Electronic",
+          "similarity": 0.7238,
+          "genre_match": false
+        }
+      ]
+    },
+    {
+      "query_track_id": 993,
+      "query_genre": "Rock",
+      "precision_at_k": 0.0,
+      "top_retrievals": [
+        {
+          "track_id": 21422,
+          "genre": "Electronic",
+          "similarity": 0.7563,
+          "genre_match": false
+        },
+        {
+          "track_id": 21891,
+          "genre": "Electronic",
+          "similarity": 0.7494,
+          "genre_match": false
+        },
+        {
+          "track_id": 997,
+          "genre": "Experimental",
+          "similarity": 0.7302,
+          "genre_match": false
+        },
+        {
+          "track_id": 52645,
+          "genre": "Electronic",
+          "similarity": 0.7291,
+          "genre_match": false
+        },
+        {
+          "track_id": 26653,
+          "genre": "Electronic",
+          "similarity": 0.7192,
+          "genre_match": false
+        }
+      ]
+    }
+  ]
+}

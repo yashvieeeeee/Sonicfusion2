@@ -1,16 +1,24 @@
-@"
 .venv/
 __pycache__/
+*.pyc
 .pytest_cache/
 .env
+.env.local
 data/
 models/
 *.pt
 *.joblib
+*.parquet
 *.npy
+*.mp3
+*.wav
+*.m4a
+*.aac
+*.ogg
+*.flac
+*.tmp
 web/node_modules/
 web/.next/
-"@ | Out-File -Encoding utf8 .gitignore
-git init
-git add -A
-git status
+web/out/
+.DS_Store
+Thumbs.db

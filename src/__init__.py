@@ -1,0 +1,1 @@
+"""SonicScope AI core package."""

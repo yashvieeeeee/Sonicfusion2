@@ -1,0 +1,7 @@
+track_id,genre,split,file_size_bytes,decodable_seconds,reason
+98565,Hip-Hop,training,300753,1.63,Decodable duration (1.63s) is below min_track_seconds (25.0s)
+98567,Hip-Hop,training,141545,0.54,Decodable duration (0.54s) is below min_track_seconds (25.0s)
+98569,Hip-Hop,training,236749,1.56,Decodable duration (1.56s) is below min_track_seconds (25.0s)
+99134,Electronic,training,1298,0.0,"Unreadable/corrupt MP3 (file size 1298 bytes, no decodable audio)"
+108925,Rock,training,1371,0.0,"Unreadable/corrupt MP3 (file size 1371 bytes, no decodable audio)"
+133297,Experimental,training,1752,0.0,"Unreadable/corrupt MP3 (file size 1752 bytes, no decodable audio)"
