@@ -23,7 +23,7 @@ from src.audio.spectrogram import (
     to_cnn_tensor,
 )
 from src.config import get_project_root, load_config, resolve_device, resolve_path
-from src.models.genre_cnn import GenreCNN
+from src.models.genre_cnn import GenreCNN, aggregate_window_probabilities
 
 
 class GenreModelService:
@@ -181,7 +181,7 @@ class GenreModelService:
         with torch.no_grad():
             logits = self.model(batch)
             probs = F.softmax(logits, dim=-1)
-            avg_probs = probs.mean(dim=0).cpu().numpy()
+            avg_probs = aggregate_window_probabilities(probs)
 
         # Rank classes
         ranked_indices = np.argsort(avg_probs)[::-1]
