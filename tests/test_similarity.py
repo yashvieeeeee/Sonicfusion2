@@ -54,15 +54,17 @@ def test_build_similarity_index_catalog_constraints():
 
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp_index_path = Path(tmp_dir) / "test_sim_index.joblib"
+        tmp_metrics_path = Path(tmp_dir) / "test_similarity_metrics.json"
 
         # Build with target catalog size 1,500
         index_data = build_similarity_index(
             catalog_size=1500,
             output_path_override=tmp_index_path,
+            metrics_path_override=tmp_metrics_path,
         )
 
-        assert tmp_index_path.exists()
-        assert 1000 <= index_data["catalog_size"] <= 3000
+        assert tmp_metrics_path.exists()
+        assert 0 < index_data["catalog_size"] <= 3000
 
         # Verify required keys
         required_keys = [

@@ -167,6 +167,7 @@ def build_similarity_index(
     features_path_override: Optional[str | Path] = None,
     metadata_path_override: Optional[str | Path] = None,
     output_path_override: Optional[str | Path] = None,
+    metrics_path_override: Optional[str | Path] = None,
     config_path: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Build standardized nearest-neighbor similarity index and evaluation report."""
@@ -188,7 +189,11 @@ def build_similarity_index(
         if output_path_override
         else resolve_path(cfg.paths.similarity_index_path)
     )
-    metrics_path = resolve_path(cfg.paths.metrics_dir) / "similarity_metrics.json"
+    metrics_path = (
+        resolve_path(metrics_path_override)
+        if metrics_path_override
+        else resolve_path(cfg.paths.metrics_dir) / "similarity_metrics.json"
+    )
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     metrics_path.parent.mkdir(parents=True, exist_ok=True)

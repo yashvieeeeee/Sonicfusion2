@@ -1,0 +1,95 @@
+{
+  "timestamp": "2026-10-22T00:14:46.340358+00:00",
+  "per_split_totals": {
+    "training": 6394,
+    "validation": 800,
+    "test": 800,
+    "total": 7994
+  },
+  "exclusions_count": 6,
+  "mean_duration_seconds": 30.0,
+  "class_names": [
+    "Electronic",
+    "Experimental",
+    "Folk",
+    "Hip-Hop",
+    "Instrumental",
+    "International",
+    "Pop",
+    "Rock"
+  ],
+  "genre_counts_by_split": {
+    "training": {
+      "Electronic": 799,
+      "Experimental": 799,
+      "Folk": 800,
+      "Hip-Hop": 797,
+      "Instrumental": 800,
+      "International": 800,
+      "Pop": 800,
+      "Rock": 799
+    },
+    "validation": {
+      "Electronic": 100,
+      "Experimental": 100,
+      "Folk": 100,
+      "Hip-Hop": 100,
+      "Instrumental": 100,
+      "International": 100,
+      "Pop": 100,
+      "Rock": 100
+    },
+    "test": {
+      "Electronic": 100,
+      "Experimental": 100,
+      "Folk": 100,
+      "Hip-Hop": 100,
+      "Instrumental": 100,
+      "International": 100,
+      "Pop": 100,
+      "Rock": 100
+    }
+  },
+  "acoustic_feature_stats_by_genre": {
+    "Electronic": {
+      "spectral_centroid_mean": 2158.78,
+      "rms_mean": 0.2191,
+      "tempo_mean": 118.91
+    },
+    "Experimental": {
+      "spectral_centroid_mean": 1840.58,
+      "rms_mean": 0.1547,
+      "tempo_mean": 119.82
+    },
+    "Folk": {
+      "spectral_centroid_mean": 1495.27,
+      "rms_mean": 0.1511,
+      "tempo_mean": 119.96
+    },
+    "Hip-Hop": {
+      "spectral_centroid_mean": 2276.64,
+      "rms_mean": 0.2272,
+      "tempo_mean": 113.74
+    },
+    "Instrumental": {
+      "spectral_centroid_mean": 1250.43,
+      "rms_mean": 0.1312,
+      "tempo_mean": 113.81
+    },
+    "International": {
+      "spectral_centroid_mean": 2072.84,
+      "rms_mean": 0.155,
+      "tempo_mean": 125.25
+    },
+    "Pop": {
+      "spectral_centroid_mean": 1966.67,
+      "rms_mean": 0.191,
+      "tempo_mean": 119.34
+    },
+    "Rock": {
+      "spectral_centroid_mean": 2137.82,
+      "rms_mean": 0.2125,
+      "tempo_mean": 121.76
+    }
+  }
+}

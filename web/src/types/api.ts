@@ -126,6 +126,91 @@ export interface BaselineValidationMetrics {
   top_feature_importances: Record<string, number>;
 }
 
+export interface ConfusedPair {
+  true_class: string;
+  predicted_class: string;
+  count: number;
+  description: string;
+}
+
+export interface MisclassifiedExample {
+  track_id: number;
+  true_label: string;
+  predicted_label: string;
+  top_3_scores: Array<{ label: string; score: number }>;
+}
+
+export interface ModelTestStats {
+  accuracy: number;
+  macro_f1: number;
+  bootstrap_ci_95?: {
+    accuracy: [number, number];
+    macro_f1: [number, number];
+  };
+  classification_report?: ClassificationReport;
+  most_confused_pairs?: ConfusedPair[];
+  misclassified_examples_sample?: MisclassifiedExample[];
+}
+
+export interface TestMetrics {
+  timestamp: string;
+  note: string;
+  git?: {
+    commit_hash: string;
+    is_dirty: boolean;
+    dirty_files?: string[];
+  };
+  hardware?: {
+    platform?: string;
+    processor?: string;
+    device?: string;
+    device_name?: string;
+    cuda_device_name?: string;
+  };
+  package_versions?: Record<string, string>;
+  sha256_checksums?: Record<string, string>;
+  split_counts?: {
+    training: number;
+    validation: number;
+    test: number;
+  };
+  evaluated_test_tracks_count: number;
+  exclusions_count: number;
+  cnn_training_metadata?: {
+    status: string;
+    best_epoch: number;
+  };
+  random_forest: ModelTestStats;
+  cnn: ModelTestStats;
+  statistical_comparison?: {
+    difference_cnn_minus_rf?: {
+      accuracy_difference_ci_95: [number, number];
+      mean_accuracy_difference: number;
+      paired_bootstrap_p_value: number;
+    };
+    mcnemar_test?: {
+      contingency_table: {
+        both_correct: number;
+        cnn_correct_rf_incorrect: number;
+        rf_correct_cnn_incorrect: number;
+        both_incorrect: number;
+      };
+      statistic: number;
+      p_value: number;
+      exact_binomial_p_value: number;
+    };
+  };
+  latency_benchmark?: {
+    device?: string;
+    hardware_name?: string;
+    n_samples_measured?: number;
+    median_decode_ms?: number;
+    median_feature_extraction_ms?: number;
+    median_rf_inference_ms?: number;
+    median_cnn_forward_ms?: number;
+  };
+}
+
 export interface MetricsResponse {
   status: string;
   cnn_status?: string;
@@ -138,4 +223,9 @@ export interface MetricsResponse {
   run_status?: string | null;
   epochs_run?: number | null;
   epochs_configured?: number | null;
+  test_status?: string;
+  test_metrics?: TestMetrics | null;
+  figures_available?: string[];
+  eda_summary?: Record<string, any> | null;
 }
+

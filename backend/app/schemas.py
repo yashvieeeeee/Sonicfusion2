@@ -117,7 +117,7 @@ class ModelsResponse(BaseModel):
 
 
 class MetricsResponse(BaseModel):
-    """Read-only academic summary of training/validation metrics."""
+    """Read-only academic summary of training, validation, and test metrics."""
 
     status: str
     cnn_status: str = Field(
@@ -133,4 +133,20 @@ class MetricsResponse(BaseModel):
     )
     epochs_run: Optional[int] = Field(None, description="Number of epochs actually executed")
     epochs_configured: Optional[int] = Field(None, description="Number of epochs configured")
+    test_status: str = Field(
+        "not available yet",
+        description="Status of official test split evaluation: 'available' or 'not available yet'",
+    )
+    test_metrics: Optional[Dict[str, Any]] = Field(
+        None,
+        description="Full evaluation results on official test split from test_metrics.json",
+    )
+    figures_available: List[str] = Field(
+        default_factory=list,
+        description="List of available figure filenames in reports/figures",
+    )
+    eda_summary: Optional[Dict[str, Any]] = Field(
+        None,
+        description="Exploratory data analysis summary from eda_summary.json",
+    )
 

@@ -1,0 +1,12 @@
+section,track_id_or_model,true_label,predicted_label,rank1_label,rank1_score,rank2_label,rank2_score,rank3_label,rank3_score,confusion_count
+cnn_misclassified_example,182,Rock,Experimental,Experimental,0.2323,Pop,0.1908,Rock,0.1798,
+cnn_misclassified_example,704,International,Hip-Hop,Hip-Hop,0.4062,Electronic,0.2742,Pop,0.1577,
+cnn_misclassified_example,708,International,Electronic,Electronic,0.4502,Hip-Hop,0.2302,Pop,0.1187,
+cnn_misclassified_example,890,Folk,Instrumental,Instrumental,0.4654,Folk,0.1389,Rock,0.1238,
+cnn_misclassified_example,892,Folk,Pop,Pop,0.2319,Rock,0.2251,Folk,0.2157,
+cnn_most_confused_pair,2D CNN,Folk,Rock,,,,,,,34
+cnn_most_confused_pair,2D CNN,Instrumental,Folk,,,,,,,33
+cnn_most_confused_pair,2D CNN,Pop,Hip-Hop,,,,,,,25
+rf_most_confused_pair,Random Forest,Instrumental,Folk,,,,,,,34
+rf_most_confused_pair,Random Forest,Folk,Experimental,,,,,,,29
+rf_most_confused_pair,Random Forest,International,Folk,,,,,,,21

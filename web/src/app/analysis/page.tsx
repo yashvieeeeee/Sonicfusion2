@@ -4,21 +4,25 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Activity,
-  AlertTriangle,
+  AlertCircle,
   ArrowLeft,
   Clock,
+  Compass,
   Cpu,
+  Database,
   Disc3,
   FileAudio,
   Gauge,
+  GitCompare,
   HelpCircle,
   Info,
   Layers,
+  Music,
   Music2,
   RefreshCw,
-  Sparkles,
+  Scale,
+  ShieldCheck,
   Waves,
-  Zap,
 } from "lucide-react";
 import AudioPlayer from "@/components/AudioPlayer";
 import ChromaChart from "@/components/ChromaChart";
@@ -40,7 +44,6 @@ export default function AnalysisPage() {
     const stored = getStoredAnalysisResult();
     if (stored) {
       setAnalysis(stored);
-      // If it matches a sample track, set its URL for audio playback
       if (stored.filename.includes("000002")) {
         setSampleAudioUrl("/samples/sample_000002.mp3");
       } else if (stored.filename.includes("000005")) {
@@ -71,35 +74,32 @@ export default function AnalysisPage() {
 
   if (!analysis) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center p-6 text-center max-w-xl mx-auto">
-        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-4">
-          <Activity className="h-8 w-8" />
-        </div>
-        <h2 className="text-2xl font-bold text-white mb-2">
-          No Audio Analysis Available
-        </h2>
-        <p className="text-sm text-slate-400 mb-6">
-          Upload an audio file to inspect deep learning genre recognition,
-          spectral heatmaps, and signal metrics, or load a benchmark track now.
-        </p>
-
-        <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
-          <Link
-            href="/"
-            className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold text-sm hover:bg-indigo-500 transition-colors shadow-lg shadow-indigo-500/20"
-          >
-            <FileAudio className="h-4 w-4" />
-            <span>Go to Upload Page</span>
-          </Link>
-
-          <button
-            onClick={() => loadBenchmarkSample("/samples/sample_000002.mp3")}
-            disabled={isLoadingSample}
-            className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-slate-700 bg-slate-800 text-slate-200 font-semibold text-sm hover:bg-slate-700 transition-colors"
-          >
-            <Disc3 className="h-4 w-4 text-cyan-400" />
-            <span>{isLoadingSample ? "Analyzing..." : "Load Sample 000002"}</span>
-          </button>
+      <div className="max-w-xl mx-auto py-24 px-4 text-center">
+        <div className="editorial-panel p-8 space-y-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#F0E8EE] text-[#76556F] mx-auto">
+            <Activity className="h-6 w-6" />
+          </div>
+          <h2 className="text-xl font-serif font-bold text-[#27232B]">
+            No Analysis Available Yet
+          </h2>
+          <p className="text-xs text-[#6B626E] leading-relaxed max-w-md mx-auto">
+            Upload an audio track from the overview dashboard or load an FMA Small benchmark track to inspect spectrograms, harmonic chroma, and 2D CNN genre predictions.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+            <Link
+              href="/studio"
+              className="w-full sm:w-auto px-4 py-2 rounded-lg bg-[#76556F] text-white text-xs font-semibold hover:bg-[#583C52] transition-colors shadow-2xs"
+            >
+              Go to Studio Workspace
+            </Link>
+            <button
+              onClick={() => loadBenchmarkSample("/samples/sample_000002.mp3")}
+              disabled={isLoadingSample}
+              className="w-full sm:w-auto px-4 py-2 rounded-lg border border-[#E3DDD4] bg-white text-xs font-semibold text-[#27232B] hover:bg-[#FAF7F2] transition-colors"
+            >
+              {isLoadingSample ? "Analyzing..." : "Load FMA 000002 (Hip-Hop)"}
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -116,28 +116,30 @@ export default function AnalysisPage() {
   } = analysis;
 
   return (
-    <div className="flex-1 py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-6">
-      {/* Top Breadcrumb & Actions Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      {/* Top Context Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E3DDD4]">
         <div className="flex items-center gap-3">
           <Link
-            href="/"
-            className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors px-2.5 py-1 rounded-lg bg-slate-800/80 border border-slate-700/60"
+            href="/studio"
+            className="flex items-center gap-1.5 text-xs text-[#6B626E] hover:text-[#76556F] font-semibold px-3 py-1.5 rounded-lg border border-[#E3DDD4] bg-white shadow-2xs transition-colors"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
-            <span>Upload Another</span>
+            <span>Studio Workspace</span>
           </Link>
-          <div className="flex items-center gap-2">
-            <h1 className="text-lg font-bold text-white truncate max-w-md">
-              {filename}
-            </h1>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">
-              {sample_rate} Hz Mono
-            </span>
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#27232B] truncate max-w-md">
+                {filename}
+              </h1>
+              <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#FAF7F2] border border-[#E3DDD4] text-[#6B626E]">
+                {sample_rate} Hz Mono
+              </span>
+            </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={() =>
               loadBenchmarkSample(
@@ -147,71 +149,97 @@ export default function AnalysisPage() {
               )
             }
             disabled={isLoadingSample}
-            className="flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-medium px-3 py-1.5 rounded-lg border border-indigo-500/30 bg-indigo-950/40 transition-colors"
+            className="flex items-center gap-1.5 text-xs font-medium px-3.5 py-1.5 rounded-md border border-[#E3DDD4] bg-white/90 text-[#27232B] hover:bg-[#FAF7F2] transition-colors shadow-2xs"
           >
             <RefreshCw
-              className={`h-3.5 w-3.5 ${isLoadingSample ? "animate-spin" : ""}`}
+              className={`h-3.5 w-3.5 text-[#76556F] ${isLoadingSample ? "animate-spin" : ""}`}
             />
             <span>
-              {isLoadingSample ? "Analyzing..." : "Compare with Alternative Sample"}
+              {isLoadingSample
+                ? "Analyzing..."
+                : filename.includes("000002")
+                ? "Compare FMA 000005 (Rock)"
+                : "Compare FMA 000002 (Hip-Hop)"}
             </span>
           </button>
         </div>
       </div>
 
-      {/* AUDIO PLAYER PREVIEW IF AVAILABLE */}
+      {/* Floating / Lightly Elevated Audio Player */}
       {sampleAudioUrl && (
-        <AudioPlayer
-          audioUrl={sampleAudioUrl}
-          filename={filename}
-          onTimeUpdate={(t) => setCurrentTime(t)}
-          seekTime={seekTime}
-        />
+        <div className="sticky top-20 z-20">
+          <AudioPlayer
+            audioUrl={sampleAudioUrl}
+            filename={filename}
+            onTimeUpdate={(t) => setCurrentTime(t)}
+            seekTime={seekTime}
+          />
+        </div>
       )}
 
-      {/* LEAD SECTION: Lead with Genre, BPM, Duration, and Waveform (PLAN §14) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left Column: Top Genre & Probability Ranking */}
-        <div className="lg:col-span-5 flex flex-col gap-6">
-          <GenreRanking genre={genre} />
-
-          {/* Quick Metrics Grid */}
-          <div className="grid grid-cols-2 gap-3">
-            <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/70">
-              <div className="flex items-center gap-1.5 text-slate-400 text-xs mb-1">
-                <Gauge className="h-4 w-4 text-amber-400" />
-                <span className="font-semibold uppercase tracking-wider text-[10px]">
-                  Estimated BPM
-                </span>
-              </div>
-              <div className="text-2xl font-extrabold font-mono text-white">
-                {acoustic_features.tempo_bpm_estimate.toFixed(1)}
-              </div>
-              <p className="text-[10px] text-slate-500 mt-0.5">
-                Librosa beat onset estimate
-              </p>
-            </div>
-
-            <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/70">
-              <div className="flex items-center gap-1.5 text-slate-400 text-xs mb-1">
-                <Clock className="h-4 w-4 text-cyan-400" />
-                <span className="font-semibold uppercase tracking-wider text-[10px]">
-                  Decoded Duration
-                </span>
-              </div>
-              <div className="text-2xl font-extrabold font-mono text-white">
-                {duration_seconds.toFixed(1)}s
-              </div>
-              <p className="text-[10px] text-slate-500 mt-0.5">
-                Standard 30s window crop
-              </p>
-            </div>
+      {/* SECTION A: Track Overview & Quantitative Metric Chips */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="editorial-panel p-4">
+          <div className="flex items-center gap-1.5 text-[#6B626E] text-[10px] font-semibold uppercase tracking-wider mb-1">
+            <Compass className="h-3.5 w-3.5 text-[#76556F]" />
+            <span>Primary Prediction</span>
           </div>
+          <div className="text-lg font-serif font-bold text-[#27232B] truncate">
+            {genre.top_label}
+          </div>
+          <p className="text-[10px] font-mono text-[#D77C63] mt-0.5 font-medium">
+            {(genre.confidence * 100).toFixed(1)}% Confidence
+          </p>
         </div>
 
-        {/* Right Column: Waveform Peak Envelope and Spectrogram Heatmap */}
-        <div className="lg:col-span-7 flex flex-col gap-6">
-          {/* Waveform */}
+        <div className="editorial-panel p-4">
+          <div className="flex items-center gap-1.5 text-[#6B626E] text-[10px] font-semibold uppercase tracking-wider mb-1">
+            <Gauge className="h-3.5 w-3.5 text-[#D77C63]" />
+            <span>Estimated Tempo</span>
+          </div>
+          <div className="text-lg font-mono font-bold text-[#27232B] tabular-nums">
+            {acoustic_features.tempo_bpm_estimate.toFixed(1)}
+          </div>
+          <p className="text-[10px] text-[#6B626E] mt-0.5">
+            Librosa beat tracking
+          </p>
+        </div>
+
+        <div className="editorial-panel p-4">
+          <div className="flex items-center gap-1.5 text-[#6B626E] text-[10px] font-semibold uppercase tracking-wider mb-1">
+            <Clock className="h-3.5 w-3.5 text-[#76556F]" />
+            <span>Decoded Window</span>
+          </div>
+          <div className="text-lg font-mono font-bold text-[#27232B] tabular-nums">
+            {duration_seconds.toFixed(1)}s
+          </div>
+          <p className="text-[10px] text-[#6B626E] mt-0.5">
+            Evaluated audio crop
+          </p>
+        </div>
+
+        <div className="editorial-panel p-4">
+          <div className="flex items-center gap-1.5 text-[#6B626E] text-[10px] font-semibold uppercase tracking-wider mb-1">
+            <Scale className="h-3.5 w-3.5 text-[#A6B5AD]" />
+            <span>Decision State</span>
+          </div>
+          <div
+            className={`text-sm font-semibold truncate ${
+              genre.is_uncertain ? "text-[#D6A75D]" : "text-[#76556F]"
+            }`}
+          >
+            {genre.is_uncertain ? "Uncertain / Hybrid" : "Confident Class"}
+          </div>
+          <p className="text-[10px] text-[#6B626E] mt-0.5">
+            {genre.is_uncertain ? "Narrow score margin" : "Clear winner margin"}
+          </p>
+        </div>
+      </div>
+
+      {/* SECTION B & C: Main Asymmetrical Visualization & Prediction Column */}
+      <div id="genre" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Broad Main Visualization Area (7 cols) */}
+        <div className="lg:col-span-7 space-y-6">
           <WaveformChart
             waveform={visualizations.waveform}
             durationSeconds={duration_seconds}
@@ -219,154 +247,171 @@ export default function AnalysisPage() {
             onSeek={handleSeek}
           />
 
-          {/* Spectrogram Heatmap */}
           <SpectrogramHeatmap
             spectrogram={visualizations.spectrogram}
             durationSeconds={duration_seconds}
           />
         </div>
+
+        {/* Narrower Genre Prediction Column (5 cols) */}
+        <div className="lg:col-span-5 space-y-6">
+          <GenreRanking genre={genre} />
+
+          {/* Model Specification Card */}
+          <div className="editorial-panel p-4 text-xs text-[#6B626E] space-y-2">
+            <div className="flex items-center gap-2 text-[#27232B] font-semibold">
+              <Cpu className="h-4 w-4 text-[#76556F]" />
+              <span>Inference Engine: GenreCNN</span>
+            </div>
+            <p className="leading-relaxed">
+              Trained on 6,394 FMA Small tracks across 8 balanced classes. 10-second multi-window average over 128-band log-mel STFT features.
+            </p>
+            <div className="pt-2 border-t border-[#E3DDD4] flex justify-between font-mono text-[10px]">
+              <span>Sample Rate: {sample_rate} Hz</span>
+              <span className="text-[#76556F]">PyTorch CPU Engine</span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* SECOND SECTION: Chroma Pitch Classes & RMS Dynamics */}
+      {/* SECTION C (Cont.): Harmonic Chroma & Signal Energy Profile */}
       <ChromaChart features={acoustic_features} />
 
-      {/* THIRD SECTION: Academic Warnings & Optional Tagging / Similarity Panels */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Warnings / Caveats */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <Info className="h-4 w-4 text-indigo-400" />
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-              Academic Caveats & Disclaimers
-            </h4>
+      {/* SECTION D: Similar Tracks & Auxiliary Discovery */}
+      <div id="similarity" className="editorial-panel p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-[#E3DDD4] mb-5">
+          <div className="flex items-center gap-2">
+            <GitCompare className="h-4 w-4 text-[#76556F]" />
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-[#27232B]">
+              Acoustic Similarity Discovery (Top-5 Nearest Neighbors)
+            </h3>
           </div>
-          <ul className="space-y-2 text-xs text-slate-400">
-            {warnings && warnings.length > 0 ? (
-              warnings.map((w, idx) => (
-                <li key={idx} className="flex items-start gap-2">
-                  <span className="text-indigo-400 text-base leading-none">&bull;</span>
-                  <span>{w}</span>
-                </li>
-              ))
-            ) : (
-              <li className="text-slate-500">No warnings reported.</li>
-            )}
-          </ul>
-        </div>
-
-        {/* Pretrained Tags Status Panel (§14) */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <Layers className="h-4 w-4 text-cyan-400" />
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-              Mood & Instrument Tags (§10)
-            </h4>
-          </div>
-          <div className="p-3 rounded-lg bg-slate-950/60 border border-slate-800/80 mb-2">
-            <div className="flex items-center justify-between text-xs mb-1">
-              <span className="text-slate-300 font-medium">Essentia EffNet</span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">
-                Disabled (CPU Safe)
-              </span>
-            </div>
-            <p className="text-[11px] text-slate-500">
-              Per PLAN §10 and §20, optional pretrained Discogs-EffNet mood/instrument heads are kept offline in local CPU mode to prevent TensorFlow/Essentia binary conflicts.
-            </p>
-          </div>
-          <p className="text-[11px] text-slate-500">
-            GenreCNN serves verified 8-genre recognition directly.
-          </p>
-        </div>
-
-        {/* Similar Tracks Panel (§12 / §14) */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <Music2 className="h-4 w-4 text-emerald-400" />
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-                Song Similarity (§12)
-              </h4>
-            </div>
-            <span
-              className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
-                analysis?.similarity_status === "available" &&
-                analysis?.similar_tracks &&
-                analysis.similar_tracks.length > 0
-                  ? "bg-emerald-950 text-emerald-400 border-emerald-800"
-                  : "bg-amber-950/80 text-amber-400 border-amber-800"
-              }`}
-            >
-              {analysis?.similarity_status === "available" &&
-              analysis?.similar_tracks &&
+          <span
+            className={`text-[10px] font-mono px-2 py-0.5 rounded ${
+              analysis.similarity_status === "available" &&
+              analysis.similar_tracks &&
               analysis.similar_tracks.length > 0
-                ? "Cosine Top-5"
-                : "Unavailable"}
-            </span>
-          </div>
+                ? "bg-[#F0E8EE] text-[#76556F]"
+                : "bg-[#FBF6EC] text-[#D6A75D]"
+            }`}
+          >
+            {analysis.similarity_status === "available" &&
+            analysis.similar_tracks &&
+            analysis.similar_tracks.length > 0
+              ? "Cosine Top-5 Catalog Index"
+              : "Catalog Index Unbuilt"}
+          </span>
+        </div>
 
-          {analysis?.similarity_status === "available" &&
-          analysis?.similar_tracks &&
-          analysis.similar_tracks.length > 0 ? (
-            <div className="space-y-2.5">
-              {/* PLAN §12 Content-based similarity retrieval */}
-              <p className="text-[11px] text-slate-400 mb-2 leading-relaxed">
-                Top-5 acoustic neighbors retrieved from the standardized FMA catalog (training &amp; validation splits only, excluding self-matches). Feature similarity score is a rough content-based proxy (tempo, timbre, chroma and energy features), not a measure of musical similarity.
-              </p>
+        {analysis.similarity_status === "available" &&
+        analysis.similar_tracks &&
+        analysis.similar_tracks.length > 0 ? (
+          <div className="space-y-3">
+            <p className="text-xs text-[#6B626E] leading-relaxed mb-3">
+              Retrieved from the FMA catalog using cosine distance over standardized 513-dimensional audio descriptors (spectral contrast, chromagrams, MFCCs, and tempo rhythmics).
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {analysis.similar_tracks.map((track) => (
                 <div
                   key={track.track_id}
-                  className="p-3 rounded-lg bg-slate-950/80 border border-slate-800/90 hover:border-emerald-500/40 transition-colors"
+                  className="p-3.5 rounded-lg border border-[#E3DDD4] bg-[#FAF7F2] flex flex-col justify-between"
                 >
-                  <div className="flex items-start justify-between gap-2 mb-1.5">
-                    <div className="min-w-0">
-                      <h5 className="text-xs font-semibold text-slate-200 truncate">
-                        {track.title}
-                      </h5>
-                      <p className="text-[11px] text-slate-400 truncate">
-                        {track.artist}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-1.5 shrink-0">
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">
+                  <div>
+                    <div className="flex items-start justify-between gap-2 mb-1.5">
+                      <div className="min-w-0">
+                        <h4 className="text-xs font-semibold text-[#27232B] truncate">
+                          {track.title}
+                        </h4>
+                        <p className="text-[11px] text-[#6B626E] truncate">
+                          {track.artist}
+                        </p>
+                      </div>
+                      <span className="font-mono text-[9px] px-1.5 py-0.2 rounded bg-white border border-[#E3DDD4] text-[#8E8692] shrink-0">
                         #{track.track_id}
                       </span>
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800">
+                    </div>
+
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#F0E8EE] text-[#76556F] font-medium">
                         {track.genre}
                       </span>
                     </div>
                   </div>
 
-                  <div className="space-y-1">
+                  <div className="space-y-1.5 pt-2 border-t border-[#E3DDD4]">
                     <div className="flex items-center justify-between text-[11px]">
-                      <span className="text-slate-400">Feature Similarity Score</span>
-                      <span className="font-mono font-medium text-emerald-400">
+                      <span className="text-[#6B626E]">Cosine Similarity</span>
+                      <span className="font-mono font-semibold text-[#D77C63] tabular-nums">
                         {track.feature_similarity_score.toFixed(4)}
                       </span>
                     </div>
-                    <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                    <div className="h-1 w-full bg-[#EAE2D8] rounded-xs overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full"
-                        style={{ width: `${Math.min(100, Math.max(0, track.feature_similarity_score * 100))}%` }}
+                        className="h-full bg-[#76556F] rounded-xs"
+                        style={{
+                          width: `${Math.min(100, Math.max(0, track.feature_similarity_score * 100))}%`,
+                        }}
                       />
                     </div>
-                    <p className="text-[10px] text-slate-400 italic pt-0.5">
+                    <p className="text-[10px] text-[#8E8692] italic pt-0.5 leading-snug">
                       {track.explanation}
                     </p>
                   </div>
                 </div>
               ))}
             </div>
-          ) : (
-            <div className="p-3.5 rounded-lg bg-slate-950/60 border border-slate-800 text-left space-y-1.5">
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-300 font-medium">Catalog Index Status</span>
-                <span className="text-[10px] font-mono text-amber-400">unavailable</span>
-              </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                Similarity catalog index is currently unavailable on this instance. SonicScope reports honest unavailability and never synthesizes or fakes recommendation results. Run <code className="text-emerald-400 font-mono text-[10px]">python scripts/07_build_similarity_index.py</code> to build the index.
-              </p>
-            </div>
-          )}
+          </div>
+        ) : (
+          <div className="p-4 rounded-lg bg-[#FAF7F2] border border-[#E3DDD4] text-xs text-[#6B626E] space-y-1.5">
+            <div className="font-medium text-[#27232B]">Catalog Index Offline / Unbuilt</div>
+            <p className="leading-relaxed">
+              Acoustic nearest neighbor indexing has not been precomputed on this server instance. Sonic Fusion maintains scientific integrity and never fakes or hallucinates recommendations.
+            </p>
+            <p className="font-mono text-[10px] text-[#76556F] pt-1">
+              Build command: python scripts/07_build_similarity_index.py
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* SECTION E: Technical Disclaimers & Pipeline Diagnostics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="editorial-panel p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <Info className="h-4 w-4 text-[#76556F]" />
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-[#27232B]">
+              Acoustic Disclaimers &amp; Scope
+            </h4>
+          </div>
+          <ul className="space-y-2 text-xs text-[#6B626E]">
+            {warnings && warnings.length > 0 ? (
+              warnings.map((w, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <span className="text-[#D77C63]">&bull;</span>
+                  <span>{w}</span>
+                </li>
+              ))
+            ) : (
+              <li>Analysis completed with 0 signal anomalies or decode warnings reported.</li>
+            )}
+          </ul>
+        </div>
+
+        <div className="editorial-panel p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <Layers className="h-4 w-4 text-[#76556F]" />
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-[#27232B]">
+              Pipeline Specifications
+            </h4>
+          </div>
+          <p className="text-xs text-[#6B626E] leading-relaxed mb-2">
+            The input audio is standardized to a 30.0-second crop at 22,050 Hz mono. Log-mel power spectrograms are extracted using a 2,048-point STFT window with a 512-point hop.
+          </p>
+          <div className="flex items-center justify-between text-[10px] font-mono text-[#8E8692] pt-2 border-t border-[#E3DDD4]">
+            <span>Zero-loss linear decimation</span>
+            <span>Deterministic CPU inference</span>
+          </div>
         </div>
       </div>
     </div>

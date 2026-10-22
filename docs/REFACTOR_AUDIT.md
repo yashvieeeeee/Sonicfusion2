@@ -2,7 +2,7 @@
 
 > **Date:** October 21, 2026  
 > **Status:** READ-ONLY AUDIT & PROPOSAL (Pending User Approval)  
-> **Scope & Authority:** Based on [`docs/PLAN.md`](file:///c:/Users/Yashvie%20Mahey/OneDrive/Desktop/dev/Sonicfusion2/docs/PLAN.md) (§05, Addenda A1–A7) and [`.agent/rules/sonicfusion2.md`](file:///c:/Users/Yashvie%20Mahey/OneDrive/Desktop/dev/Sonicfusion2/agents/rules/sonicfusion2.md).  
+> **Scope & Authority:** Based on [`docs/PLAN.md`](docs/PLAN.md) (§05, Addenda A1–A7) and [`.agent/rules/sonicfusion2.md`](.agents/rules/sonicfusion2.md).  
 > **Hard Constraints Honored:** No existing files modified, moved, or deleted. All paths, commands, and references analyzed in place.
 
 ---

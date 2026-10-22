@@ -79,20 +79,26 @@ def test_models_endpoint():
         assert len(data["class_names"]) == 8
 
 
-def test_metrics_endpoint_missing_cnn_val():
+def test_metrics_endpoint_missing_cnn_val(tmp_path):
     """Verify GET /api/metrics reports 'validation metrics not available yet' when cnn_val.json is missing.
 
     Strict contract: Must never read pilot_* files even if present on disk.
     """
-    response = client.get("/api/metrics")
-    assert response.status_code == 200
-    data = response.json()
-    assert "status" in data
-    assert data["cnn_validation"] is None
-    assert data["cnn_status"] == "validation metrics not available yet"
-    # Verify no pilot metrics leak into the response
-    assert "pilot_cnn_2epoch" not in response.text
-    assert "0.19642857" not in response.text
+    metrics_dir = tmp_path / "reports" / "metrics"
+    metrics_dir.mkdir(parents=True)
+    pilot_file = metrics_dir / "pilot_cnn_2epoch_val.json"
+    pilot_file.write_text(json.dumps({"f1": 0.19642857}), encoding="utf-8")
+
+    with patch("backend.app.main.get_project_root", return_value=tmp_path):
+        response = client.get("/api/metrics")
+        assert response.status_code == 200
+        data = response.json()
+        assert "status" in data
+        assert data["cnn_validation"] is None
+        assert data["cnn_status"] == "validation metrics not available yet"
+        # Verify no pilot metrics leak into the response
+        assert "pilot_cnn_2epoch" not in response.text
+        assert "0.19642857" not in response.text
 
 
 def test_metrics_endpoint_with_cnn_val(tmp_path):
@@ -119,6 +125,72 @@ def test_metrics_endpoint_with_cnn_val(tmp_path):
         assert data["epochs_run"] == 25
         assert data["epochs_configured"] == 25
 
+
+def test_metrics_endpoint_missing_test_metrics():
+    """Verify GET /api/metrics reports 'not available yet' when test_metrics.json is absent.
+
+    Ensures zero metric fabrication on the held-out test split.
+    """
+    response = client.get("/api/metrics")
+    assert response.status_code == 200
+    data = response.json()
+    assert "test_status" in data
+    # When test_metrics.json does not exist on disk
+    if not (Path("reports/metrics/test_metrics.json").exists()):
+        assert data["test_status"] == "not available yet"
+        assert data["test_metrics"] is None
+
+
+def test_figures_endpoint(tmp_path):
+    """Verify GET /api/figures/{filename} serves PNG images safely and blocks traversal."""
+    figures_dir = tmp_path / "reports" / "figures"
+    figures_dir.mkdir(parents=True)
+    sample_png = figures_dir / "test_sample.png"
+    sample_png.write_bytes(b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDRdummycontent")
+
+    with patch("backend.app.main.get_project_root", return_value=tmp_path):
+        # 1. Valid figure
+        res_valid = client.get("/api/figures/test_sample.png")
+        assert res_valid.status_code == 200
+        assert res_valid.headers["content-type"] == "image/png"
+        assert res_valid.content.startswith(b"\x89PNG")
+
+        # 2. Path traversal: ../secret.txt
+        res_traversal = client.get("/api/figures/../secret.txt")
+        assert res_traversal.status_code == 404
+
+        # 3. Percent-encoded traversal: %2e%2e%2f
+        res_encoded1 = client.get("/api/figures/%2e%2e%2f")
+        assert res_encoded1.status_code == 404
+        res_encoded2 = client.get("/api/figures/%2e%2e%2fsecret.txt")
+        assert res_encoded2.status_code == 404
+
+        # 4. Absolute path
+        res_abs1 = client.get("/api/figures//etc/passwd")
+        assert res_abs1.status_code == 404
+        res_abs2 = client.get("/api/figures/C:/Windows/win.ini")
+        assert res_abs2.status_code == 404
+
+        # 5. Backslashes
+        res_backslash1 = client.get("/api/figures/subdir\\figure.png")
+        assert res_backslash1.status_code == 404
+        res_backslash2 = client.get("/api/figures/..\\secret.png")
+        assert res_backslash2.status_code == 404
+
+        # 6. Subdirectory
+        res_subdir = client.get("/api/figures/subdir/test_sample.png")
+        assert res_subdir.status_code == 404
+
+        # 7. Non-.png extension
+        res_ext_jpg = client.get("/api/figures/figure.jpg")
+        assert res_ext_jpg.status_code == 404
+        res_ext_txt = client.get("/api/figures/secret.txt")
+        assert res_ext_txt.status_code == 404
+
+        # 8. Missing figure with valid name
+        res_missing = client.get("/api/figures/non_existent_figure_999.png")
+        assert res_missing.status_code == 404
+        assert "not found" in res_missing.json()["detail"].lower()
 
 
 def test_cors_restrictions():

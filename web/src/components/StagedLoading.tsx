@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { CheckCircle2, Cpu, Disc3, Loader2, Music, Waves } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 
 interface StagedLoadingProps {
   filename: string;
@@ -11,33 +11,28 @@ interface Stage {
   id: number;
   title: string;
   desc: string;
-  icon: React.ElementType;
 }
 
 const STAGES: Stage[] = [
   {
     id: 1,
-    title: "Decoding Audio Stream",
-    desc: "Validating audio bitstream and converting to 22,050 Hz standardized PCM array",
-    icon: Disc3,
+    title: "Audio Stream Decoding",
+    desc: "Validating container bytes and converting to standardized 22,050 Hz PCM mono array",
   },
   {
     id: 2,
-    title: "Extracting Acoustic Signal Features",
-    desc: "Computing librosa beat tempo (BPM), frame-level RMS energy, and 12-bin chroma",
-    icon: Music,
+    title: "Acoustic Feature Extraction",
+    desc: "Computing librosa beat tempo, frame-level RMS energy, and 12-bin chroma pitch profile",
   },
   {
     id: 3,
-    title: "Running GenreCNN 2D Inference",
-    desc: "Evaluating 10-second log-mel spectrogram windows through 3-block 2D CNN",
-    icon: Cpu,
+    title: "GenreCNN 2D Spectrogram Inference",
+    desc: "Evaluating standardized 128-band log-mel windows through frozen 3-block 2D CNN",
   },
   {
     id: 4,
-    title: "Generating Visualizations & Matrices",
-    desc: "Downsampling peak waveform envelope (1,000 pts) and log-mel matrix (128x300)",
-    icon: Waves,
+    title: "Visual Matrix Generation",
+    desc: "Downsampling peak waveform envelope (1,000 pts) and log-mel power matrix (128x300)",
   },
 ];
 
@@ -45,10 +40,9 @@ export default function StagedLoading({ filename }: StagedLoadingProps) {
   const [activeStage, setActiveStage] = useState<number>(1);
 
   useEffect(() => {
-    // Progress through staged display to reflect the pipeline phases while awaiting backend response
     const t1 = setTimeout(() => setActiveStage(2), 1200);
     const t2 = setTimeout(() => setActiveStage(3), 3200);
-    const t3 = setTimeout(() => setActiveStage(4), 5800);
+    const t3 = setTimeout(() => setActiveStage(4), 5600);
 
     return () => {
       clearTimeout(t1);
@@ -58,93 +52,86 @@ export default function StagedLoading({ filename }: StagedLoadingProps) {
   }, []);
 
   return (
-    <div className="w-full max-w-xl mx-auto rounded-2xl border border-slate-800 bg-slate-900/90 p-6 sm:p-8 backdrop-blur-xl shadow-2xl">
-      <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 animate-pulse">
-          <Loader2 className="h-5 w-5 animate-spin" />
+    <div className="w-full max-w-xl mx-auto glass-floating p-6 sm:p-8 rounded-xl">
+      <div className="flex items-center gap-3 pb-4 mb-5 border-b border-[#E3DDD4]">
+        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#F0E8EE] text-[#76556F]">
+          <Loader2 className="h-4 w-4 animate-spin text-[#D77C63]" />
         </div>
         <div>
-          <h3 className="text-base font-semibold text-white">
+          <h3 className="text-sm font-semibold text-[#27232B]">
             Processing Audio Pipeline
           </h3>
-          <p className="text-xs text-slate-400 font-mono truncate max-w-sm">
+          <p className="text-xs text-[#6B626E] font-mono truncate max-w-md">
             {filename}
           </p>
         </div>
       </div>
 
       {/* Stage indicators */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         {STAGES.map((stage) => {
-          const Icon = stage.icon;
           const isDone = activeStage > stage.id;
           const isCurrent = activeStage === stage.id;
-          const isPending = activeStage < stage.id;
 
           return (
             <div
               key={stage.id}
-              className={`flex items-start gap-4 p-3.5 rounded-xl border transition-all duration-300 ${
+              className={`flex items-start gap-3.5 p-3 rounded-lg border transition-all duration-300 ${
                 isCurrent
-                  ? "bg-indigo-950/40 border-indigo-500/40 shadow-sm shadow-indigo-500/10"
+                  ? "bg-white border-[#76556F]/40 shadow-xs"
                   : isDone
-                  ? "bg-slate-950/40 border-slate-800 text-slate-400"
-                  : "bg-slate-950/20 border-slate-900/60 opacity-50"
+                  ? "bg-white/80 border-[#E3DDD4]"
+                  : "bg-white/40 border-[#E3DDD4]/60 opacity-50"
               }`}
             >
               <div
-                className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
+                className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-mono font-medium ${
                   isDone
-                    ? "bg-emerald-950/70 text-emerald-400 border border-emerald-800/60"
+                    ? "bg-[#76556F] text-white"
                     : isCurrent
-                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/30"
-                    : "bg-slate-800 text-slate-500"
+                    ? "bg-[#FDF1EE] text-[#D77C63] border border-[#F1D0CD]"
+                    : "bg-[#FAF7F2] text-[#8E8692]"
                 }`}
               >
-                {isDone ? (
-                  <CheckCircle2 className="h-4 w-4" />
-                ) : isCurrent ? (
-                  <Icon className="h-4 w-4 animate-bounce" />
-                ) : (
-                  <Icon className="h-4 w-4" />
-                )}
+                {isDone ? <Check className="h-3.5 w-3.5" /> : stage.id}
               </div>
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
                   <h4
-                    className={`text-xs font-semibold uppercase tracking-wider ${
+                    className={`text-xs font-medium ${
                       isCurrent
-                        ? "text-indigo-300"
+                        ? "text-[#76556F] font-semibold"
                         : isDone
-                        ? "text-emerald-400"
-                        : "text-slate-500"
+                        ? "text-[#27232B]"
+                        : "text-[#6B626E]"
                     }`}
                   >
-                    Stage {stage.id}: {stage.title}
+                    {stage.title}
                   </h4>
                   {isCurrent && (
-                    <span className="flex items-center gap-1 text-[11px] text-indigo-400 font-medium">
-                      <span className="h-1.5 w-1.5 rounded-full bg-indigo-400 animate-ping" />
-                      In progress...
+                    <span className="text-[10px] font-mono text-[#D77C63] font-medium">
+                      In Progress...
                     </span>
                   )}
                   {isDone && (
-                    <span className="text-[11px] text-emerald-400 font-medium">
+                    <span className="text-[10px] font-mono text-[#6C7F75]">
                       Completed
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-slate-400 mt-0.5">{stage.desc}</p>
+                <p className="text-[11px] text-[#6B626E] mt-0.5 leading-relaxed">
+                  {stage.desc}
+                </p>
               </div>
             </div>
           );
         })}
       </div>
 
-      <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-500">
-        <span>Running real local CPU inference</span>
-        <span>Standardized FMA small config</span>
+      <div className="mt-5 pt-3 border-t border-[#E3DDD4] flex items-center justify-between text-[10px] font-mono text-[#8E8692]">
+        <span>Standardized PyTorch CPU execution</span>
+        <span>Sampling: 22,050 Hz Mono</span>
       </div>
     </div>
   );

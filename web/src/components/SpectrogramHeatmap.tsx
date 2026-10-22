@@ -1,22 +1,40 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import { Activity, Flame } from "lucide-react";
+import { Activity } from "lucide-react";
 
 interface SpectrogramHeatmapProps {
   spectrogram: number[][]; // [freq_bins, time_bins]
   durationSeconds: number;
 }
 
-// Perceptually uniform Inferno color interpolation for dB values
-function infernoColor(val: number): [number, number, number] {
-  // val is normalized 0.0 to 1.0
-  const t = Math.max(0, Math.min(1, val));
-  // Polynomial approximation of inferno colormap
-  const r = Math.min(255, Math.max(0, Math.round(255 * (0.0002 + 1.25 * t + 0.9 * t * t - 1.15 * t * t * t))));
-  const g = Math.min(255, Math.max(0, Math.round(255 * (0.001 + 0.1 * t + 1.8 * t * t - 0.9 * t * t * t))));
-  const b = Math.min(255, Math.max(0, Math.round(255 * (0.05 + 1.2 * t - 1.8 * t * t + 0.6 * t * t * t))));
-  return [r, g, b];
+// Custom perceptually uniform sequential colormap matching the Atmospheric Laboratory palette:
+// Deep Ink Plum -> Dark Dusty Plum -> Dusty Plum -> Muted Coral -> Soft Amber -> Warm Ivory Peak
+function laboratorySpectrogramColor(norm: number): [number, number, number] {
+  const t = Math.max(0, Math.min(1, norm));
+
+  const stops = [
+    { p: 0.0, r: 31, g: 26, b: 34 },    // Deep ink plum (#1F1A22)
+    { p: 0.22, r: 77, g: 49, b: 71 },   // Dark dusty plum (#4D3147)
+    { p: 0.45, r: 118, g: 85, b: 111 }, // Dusty plum (#76556F)
+    { p: 0.70, r: 215, g: 124, b: 99 }, // Muted coral (#D77C63)
+    { p: 0.88, r: 214, g: 167, b: 93 }, // Soft amber (#D6A75D)
+    { p: 1.0, r: 255, g: 249, b: 238 }, // Warm pale ivory peak (#FFF9EE)
+  ];
+
+  for (let i = 0; i < stops.length - 1; i++) {
+    const s0 = stops[i];
+    const s1 = stops[i + 1];
+    if (t >= s0.p && t <= s1.p) {
+      const localT = (t - s0.p) / (s1.p - s0.p);
+      const r = Math.round(s0.r + localT * (s1.r - s0.r));
+      const g = Math.round(s0.g + localT * (s1.g - s0.g));
+      const b = Math.round(s0.b + localT * (s1.b - s0.b));
+      return [r, g, b];
+    }
+  }
+
+  return [255, 249, 238];
 }
 
 export default function SpectrogramHeatmap({
@@ -59,7 +77,6 @@ export default function SpectrogramHeatmap({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Use actual dimensions
     const width = canvas.width;
     const height = canvas.height;
     const imgData = ctx.createImageData(width, height);
@@ -68,7 +85,7 @@ export default function SpectrogramHeatmap({
     const range = Math.max(maxDb - minDb, 1.0);
 
     for (let py = 0; py < height; py++) {
-      // In audio spectrograms, freq 0 is bottom, highest freq is top
+      // Audio frequency 0 Hz is at the bottom, Nyquist at top
       const freqIdx = Math.floor(((height - 1 - py) / height) * numFreq);
       const safeFreq = Math.min(Math.max(freqIdx, 0), numFreq - 1);
 
@@ -78,7 +95,7 @@ export default function SpectrogramHeatmap({
 
         const db = spectrogram[safeFreq][safeTime];
         const norm = (db - minDb) / range;
-        const [r, g, b] = infernoColor(norm);
+        const [r, g, b] = laboratorySpectrogramColor(norm);
 
         const pIndex = (py * width + px) * 4;
         data[pIndex] = r;
@@ -106,7 +123,7 @@ export default function SpectrogramHeatmap({
 
     const db = spectrogram[freqIdx][timeIdx];
     const timeSec = timeRatio * durationSeconds;
-    // 0 to 11,025 Hz (Nyquist of 22,050 Hz)
+    // Nyquist of 22,050 Hz is 11,025 Hz
     const freqHz = Math.round(freqRatio * 11025);
 
     setHoverInfo({
@@ -119,54 +136,55 @@ export default function SpectrogramHeatmap({
   };
 
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-4">
-      <div className="flex items-center justify-between mb-3">
+    <div className="editorial-panel p-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
         <div className="flex items-center gap-2">
-          <Flame className="h-4 w-4 text-amber-400" />
-          <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-            Log-Mel Spectrogram Heatmap (128 Mel Bins x {numTime} Frames)
-          </h4>
+          <Activity className="h-4 w-4 text-[#76556F]" />
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-[#27232B]">
+            Log-Mel Power Spectrogram (128 Mel Bins &times; {numTime} Frames)
+          </h3>
         </div>
-        <div className="flex items-center gap-4 text-xs text-slate-400">
-          <span>Range: {minDb.toFixed(0)} dB to {maxDb.toFixed(0)} dB</span>
-          <span className="font-mono text-indigo-400">
-            Shape: [{numFreq}, {numTime}]
+        <div className="flex items-center gap-3 text-xs text-[#6B626E]">
+          <span>Range: {minDb} to {maxDb} dB</span>
+          <span className="font-mono text-[11px] text-[#76556F] bg-[#F0E8EE] px-2 py-0.5 rounded font-medium">
+            Tensor [{numFreq}&times;{numTime}]
           </span>
         </div>
       </div>
 
       <div className="relative">
-        {/* Y Axis frequency labels */}
         <div className="flex items-stretch gap-2">
-          <div className="flex flex-col justify-between py-1 text-[10px] font-mono text-slate-500 text-right w-12 select-none">
-            <span>11 kHz</span>
+          {/* Y-axis frequency scale */}
+          <div className="flex flex-col justify-between py-1 text-[10px] font-mono text-[#8E8692] text-right w-14 select-none">
+            <span>11.0 kHz</span>
             <span>5.5 kHz</span>
             <span>2.2 kHz</span>
             <span>0 Hz</span>
           </div>
 
           {/* Canvas container */}
-          <div className="relative flex-1 h-56 bg-black rounded-lg overflow-hidden border border-slate-800">
+          <div className="relative flex-1 h-52 bg-[#1F1A22] rounded border border-[#E3DDD4] overflow-hidden cursor-crosshair">
             <canvas
               ref={canvasRef}
               width={numTime || 300}
               height={numFreq || 128}
-              className="w-full h-full block cursor-crosshair"
+              className="w-full h-full block"
               onMouseMove={handleMouseMove}
               onMouseLeave={() => setHoverInfo(null)}
             />
 
+            {/* Selective glassmorphic floating inspection tooltip */}
             {hoverInfo && (
               <div
-                className="pointer-events-none absolute z-20 px-2 py-1 rounded bg-slate-900/95 border border-indigo-500/50 text-[11px] font-mono text-white shadow-xl"
+                className="pointer-events-none absolute z-20 px-2.5 py-1.5 rounded bg-white/90 backdrop-blur-md border border-[#E3DDD4] text-[11px] font-mono text-[#27232B] shadow-md"
                 style={{
-                  left: Math.min(hoverInfo.x + 12, 280),
-                  top: Math.max(hoverInfo.y - 45, 10),
+                  left: Math.min(hoverInfo.x + 12, 260),
+                  top: Math.max(hoverInfo.y - 50, 8),
                 }}
               >
                 <div>t = {hoverInfo.timeSec.toFixed(2)}s</div>
                 <div>f = {hoverInfo.freqHz} Hz</div>
-                <div className="text-amber-400">
+                <div className="text-[#D77C63] font-semibold">
                   {hoverInfo.dbValue.toFixed(1)} dB
                 </div>
               </div>
@@ -174,8 +192,8 @@ export default function SpectrogramHeatmap({
           </div>
         </div>
 
-        {/* X Axis time labels */}
-        <div className="flex justify-between pl-14 pr-2 mt-1.5 text-[10px] font-mono text-slate-500 select-none">
+        {/* X-axis time scale */}
+        <div className="flex justify-between pl-16 pr-2 mt-1.5 text-[10px] font-mono text-[#8E8692] select-none">
           <span>0.0s</span>
           <span>{(durationSeconds * 0.25).toFixed(1)}s</span>
           <span>{(durationSeconds * 0.5).toFixed(1)}s</span>
@@ -184,15 +202,25 @@ export default function SpectrogramHeatmap({
         </div>
       </div>
 
-      {/* Colorbar legend */}
-      <div className="mt-4 flex items-center justify-between text-[11px] text-slate-400">
-        <span>Low Energy ({minDb.toFixed(0)} dB)</span>
-        <div className="h-2.5 w-60 rounded-full bg-gradient-to-r from-[#000004] via-[#bb3754] to-[#fcffa4] border border-slate-700/60" />
-        <span>Peak Energy ({maxDb.toFixed(0)} dB)</span>
+      {/* Color scale gradient indicator */}
+      <div className="mt-4 pt-3 border-t border-[#E3DDD4] flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-[#6B626E]">
+        <div className="flex items-center gap-2">
+          <span>Spectral Power:</span>
+          <div className="flex items-center gap-1.5">
+            <span className="font-mono text-[10px]">{minDb} dB</span>
+            <div
+              className="h-2.5 w-44 rounded-xs border border-[#E3DDD4]"
+              style={{
+                background: "linear-gradient(to right, #1F1A22 0%, #4D3147 22%, #76556F 45%, #D77C63 70%, #D6A75D 88%, #FFF9EE 100%)",
+              }}
+            />
+            <span className="font-mono text-[10px]">{maxDb} dB</span>
+          </div>
+        </div>
+        <span className="text-[10px] text-[#8E8692]">
+          STFT 2048 FFT &bull; 512 Hop &bull; 128 Mel Filters (CNN Input Tensor)
+        </span>
       </div>
-      <p className="text-[11px] text-slate-500 mt-2">
-        STFT log-mel power spectrogram (2,048 FFT, 512 hop, 128 bands). This representation serves as direct 2D image input into the GenreCNN classifier.
-      </p>
     </div>
   );
 }

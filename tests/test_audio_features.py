@@ -160,28 +160,24 @@ def test_silent_clip_handling():
         assert v == 0.0
 
 
-def test_audio_loading_and_segmentation(cfg):
+def test_audio_loading_and_segmentation(cfg, tmp_path):
     """Verify load_audio does not pad short audio and segment_audio splits into 3 padded windows."""
     sr = int(cfg.audio.sample_rate)
 
     # 1. Short audio (1 second): load_audio returns unpadded audio (sr samples)
     short_audio = np.ones(sr, dtype=np.float32)
-    tmp_path = resolve_path("data/cache/temp_short.wav")
+    sample_wav = tmp_path / "temp_short.wav"
     import soundfile as sf
-    sf.write(str(tmp_path), short_audio, sr)
+    sf.write(str(sample_wav), short_audio, sr)
 
-    try:
-        loaded = load_audio(tmp_path, sr=sr, duration=30.0)
-        # load_audio must NOT pad; returns at most duration seconds (1 second in this case)
-        assert loaded.shape == (sr,)
-        assert loaded.dtype == np.float32
-        assert np.isclose(loaded[0], 1.0, atol=1e-4)
+    loaded = load_audio(sample_wav, sr=sr, duration=30.0)
+    # load_audio must NOT pad; returns at most duration seconds (1 second in this case)
+    assert loaded.shape == (sr,)
+    assert loaded.dtype == np.float32
+    assert np.isclose(loaded[0], 1.0, atol=1e-4)
 
-        # Padding happens in the segmenting step per PLAN §07
-        segments = segment_audio(loaded, sr=sr, window_sec=10.0, num_windows=3)
-        assert len(segments) == 3
-        for seg in segments:
-            assert seg.shape == (int(sr * 10),)
-    finally:
-        if tmp_path.exists():
-            tmp_path.unlink()
+    # Padding happens in the segmenting step per PLAN §07
+    segments = segment_audio(loaded, sr=sr, window_sec=10.0, num_windows=3)
+    assert len(segments) == 3
+    for seg in segments:
+        assert seg.shape == (int(sr * 10),)

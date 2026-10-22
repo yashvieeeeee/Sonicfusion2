@@ -72,3 +72,8 @@ export async function fetchSampleAudio(samplePath: string): Promise<File> {
   const filename = samplePath.split("/").pop() || "sample.mp3";
   return new File([blob], filename, { type: "audio/mpeg" });
 }
+
+export function getFigureUrl(filename: string): string {
+  return `${API_BASE_URL}/api/figures/${filename}`;
+}
+

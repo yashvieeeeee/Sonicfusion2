@@ -1,0 +1,390 @@
+{
+  "timestamp": "2026-10-21T23:58:32.096732+00:00",
+  "note": "Model selection used validation only. Evaluated on official FMA test split exactly once.",
+  "git": {
+    "commit_hash": "65a23b6fa91448a0b23d52705e2d208de90e0fbd",
+    "is_dirty": false,
+    "dirty_files": []
+  },
+  "hardware": {
+    "platform": "Windows-11-10.0.26300-SP0",
+    "processor": "AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD",
+    "machine": "AMD64",
+    "python_version": "3.13.7",
+    "device": "cpu",
+    "device_name": "AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD"
+  },
+  "package_versions": {
+    "python": "3.13.7",
+    "torch": "2.13.0+cpu",
+    "torchaudio": "2.11.0+cpu",
+    "librosa": "0.10.2",
+    "numpy": "2.5.3",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.0",
+    "pandas": "2.3.3"
+  },
+  "sha256_checksums": {
+    "cnn_checkpoint": "e8d5c158078e50dc5c94d289327fd6df26fdcd9f95253040680c4a7c299d3dbf",
+    "rf_joblib": "f13f2129d94306a47f0b855f2651f78338d07acb2a3aa423966c7c8c7b81b6a2",
+    "manifest_csv": "8913b4e9d2529906c06caba472b616dea2e4dc0d30e1b0f4abad3f0b8fc06305",
+    "config_yaml": "5774d65bdb176352646144be28a82daf1fd3396b0bdf9af63283591445d33cb2",
+    "label_map_json": "243a645f735b478065420f4198aba31ee28d8852446714b3626196908f6d2227",
+    "norm_stats_json": "3bb4340b4d3efbef537b42f29a872a6e615549191dad34d854bc07c4f86328f3"
+  },
+  "split_counts": {
+    "training": 6394,
+    "validation": 800,
+    "test": 800
+  },
+  "evaluated_test_tracks_count": 800,
+  "exclusions_count": 6,
+  "cnn_training_metadata": {
+    "status": "interrupted",
+    "best_epoch": 1
+  },
+  "random_forest": {
+    "accuracy": 0.4375,
+    "macro_f1": 0.4357,
+    "bootstrap_ci_95": {
+      "accuracy": [
+        0.4038,
+        0.4712
+      ],
+      "macro_f1": [
+        0.4037,
+        0.4675
+      ]
+    },
+    "classification_report": {
+      "Electronic": {
+        "precision": 0.4864864864864865,
+        "recall": 0.54,
+        "f1-score": 0.5118483412322274,
+        "support": 100.0
+      },
+      "Experimental": {
+        "precision": 0.26744186046511625,
+        "recall": 0.23,
+        "f1-score": 0.24731182795698925,
+        "support": 100.0
+      },
+      "Folk": {
+        "precision": 0.22033898305084745,
+        "recall": 0.26,
+        "f1-score": 0.23853211009174313,
+        "support": 100.0
+      },
+      "Hip-Hop": {
+        "precision": 0.6363636363636364,
+        "recall": 0.7,
+        "f1-score": 0.6666666666666666,
+        "support": 100.0
+      },
+      "Instrumental": {
+        "precision": 0.38636363636363635,
+        "recall": 0.34,
+        "f1-score": 0.3617021276595745,
+        "support": 100.0
+      },
+      "International": {
+        "precision": 0.45454545454545453,
+        "recall": 0.5,
+        "f1-score": 0.47619047619047616,
+        "support": 100.0
+      },
+      "Pop": {
+        "precision": 0.3953488372093023,
+        "recall": 0.34,
+        "f1-score": 0.3655913978494624,
+        "support": 100.0
+      },
+      "Rock": {
+        "precision": 0.6483516483516484,
+        "recall": 0.59,
+        "f1-score": 0.6178010471204188,
+        "support": 100.0
+      },
+      "accuracy": 0.4375,
+      "macro avg": {
+        "precision": 0.436905067854516,
+        "recall": 0.4375,
+        "f1-score": 0.4357054993459448,
+        "support": 800.0
+      },
+      "weighted avg": {
+        "precision": 0.43690506785451605,
+        "recall": 0.4375,
+        "f1-score": 0.4357054993459448,
+        "support": 800.0
+      }
+    },
+    "most_confused_pairs": [
+      {
+        "true_class": "Instrumental",
+        "predicted_class": "Folk",
+        "count": 34,
+        "description": "Instrumental -> Folk"
+      },
+      {
+        "true_class": "Folk",
+        "predicted_class": "Experimental",
+        "count": 29,
+        "description": "Folk -> Experimental"
+      },
+      {
+        "true_class": "International",
+        "predicted_class": "Folk",
+        "count": 21,
+        "description": "International -> Folk"
+      }
+    ]
+  },
+  "cnn": {
+    "accuracy": 0.5075,
+    "macro_f1": 0.4985,
+    "bootstrap_ci_95": {
+      "accuracy": [
+        0.4762,
+        0.5425
+      ],
+      "macro_f1": [
+        0.4671,
+        0.5302
+      ]
+    },
+    "classification_report": {
+      "Electronic": {
+        "precision": 0.6057692307692307,
+        "recall": 0.63,
+        "f1-score": 0.6176470588235294,
+        "support": 100.0
+      },
+      "Experimental": {
+        "precision": 0.4044943820224719,
+        "recall": 0.36,
+        "f1-score": 0.38095238095238093,
+        "support": 100.0
+      },
+      "Folk": {
+        "precision": 0.26666666666666666,
+        "recall": 0.32,
+        "f1-score": 0.2909090909090909,
+        "support": 100.0
+      },
+      "Hip-Hop": {
+        "precision": 0.593103448275862,
+        "recall": 0.86,
+        "f1-score": 0.7020408163265306,
+        "support": 100.0
+      },
+      "Instrumental": {
+        "precision": 0.5294117647058824,
+        "recall": 0.45,
+        "f1-score": 0.4864864864864865,
+        "support": 100.0
+      },
+      "International": {
+        "precision": 0.5714285714285714,
+        "recall": 0.52,
+        "f1-score": 0.5445026178010471,
+        "support": 100.0
+      },
+      "Pop": {
+        "precision": 0.5957446808510638,
+        "recall": 0.28,
+        "f1-score": 0.38095238095238093,
+        "support": 100.0
+      },
+      "Rock": {
+        "precision": 0.5378151260504201,
+        "recall": 0.64,
+        "f1-score": 0.5844748858447488,
+        "support": 100.0
+      },
+      "accuracy": 0.5075,
+      "macro avg": {
+        "precision": 0.5130542338462711,
+        "recall": 0.5075000000000001,
+        "f1-score": 0.4984957147620244,
+        "support": 800.0
+      },
+      "weighted avg": {
+        "precision": 0.5130542338462711,
+        "recall": 0.5075,
+        "f1-score": 0.4984957147620244,
+        "support": 800.0
+      }
+    },
+    "most_confused_pairs": [
+      {
+        "true_class": "Folk",
+        "predicted_class": "Rock",
+        "count": 34,
+        "description": "Folk -> Rock"
+      },
+      {
+        "true_class": "Instrumental",
+        "predicted_class": "Folk",
+        "count": 33,
+        "description": "Instrumental -> Folk"
+      },
+      {
+        "true_class": "Pop",
+        "predicted_class": "Hip-Hop",
+        "count": 25,
+        "description": "Pop -> Hip-Hop"
+      }
+    ],
+    "misclassified_examples_sample": [
+      {
+        "track_id": 182,
+        "true_label": "Rock",
+        "predicted_label": "Experimental",
+        "top_3_scores": [
+          {
+            "label": "Experimental",
+            "score": 0.2323
+          },
+          {
+            "label": "Pop",
+            "score": 0.1908
+          },
+          {
+            "label": "Rock",
+            "score": 0.1798
+          }
+        ]
+      },
+      {
+        "track_id": 704,
+        "true_label": "International",
+        "predicted_label": "Hip-Hop",
+        "top_3_scores": [
+          {
+            "label": "Hip-Hop",
+            "score": 0.4062
+          },
+          {
+            "label": "Electronic",
+            "score": 0.2742
+          },
+          {
+            "label": "Pop",
+            "score": 0.1577
+          }
+        ]
+      },
+      {
+        "track_id": 708,
+        "true_label": "International",
+        "predicted_label": "Electronic",
+        "top_3_scores": [
+          {
+            "label": "Electronic",
+            "score": 0.4502
+          },
+          {
+            "label": "Hip-Hop",
+            "score": 0.2302
+          },
+          {
+            "label": "Pop",
+            "score": 0.1187
+          }
+        ]
+      },
+      {
+        "track_id": 890,
+        "true_label": "Folk",
+        "predicted_label": "Instrumental",
+        "top_3_scores": [
+          {
+            "label": "Instrumental",
+            "score": 0.4654
+          },
+          {
+            "label": "Folk",
+            "score": 0.1389
+          },
+          {
+            "label": "Rock",
+            "score": 0.1238
+          }
+        ]
+      },
+      {
+        "track_id": 892,
+        "true_label": "Folk",
+        "predicted_label": "Pop",
+        "top_3_scores": [
+          {
+            "label": "Pop",
+            "score": 0.2319
+          },
+          {
+            "label": "Rock",
+            "score": 0.2251
+          },
+          {
+            "label": "Folk",
+            "score": 0.2157
+          }
+        ]
+      }
+    ]
+  },
+  "statistical_comparison": {
+    "n_resamples": 1000,
+    "seed": 42,
+    "confidence_level": 0.95,
+    "cnn": {
+      "accuracy_ci_95": [
+        0.4762,
+        0.5425
+      ],
+      "macro_f1_ci_95": [
+        0.4671,
+        0.5302
+      ]
+    },
+    "rf": {
+      "accuracy_ci_95": [
+        0.4038,
+        0.4712
+      ],
+      "macro_f1_ci_95": [
+        0.4037,
+        0.4675
+      ]
+    },
+    "difference_cnn_minus_rf": {
+      "accuracy_difference_ci_95": [
+        0.0387,
+        0.1038
+      ],
+      "mean_accuracy_difference": 0.0705,
+      "paired_bootstrap_p_value": 0.0
+    },
+    "mcnemar_test": {
+      "contingency_table": {
+        "both_correct": 275,
+        "cnn_correct_rf_incorrect": 131,
+        "rf_correct_cnn_incorrect": 75,
+        "both_incorrect": 319
+      },
+      "statistic": 14.6845,
+      "p_value": 0.00013,
+      "exact_binomial_p_value": 0.00012
+    }
+  },
+  "latency_benchmark": {
+    "device": "cpu",
+    "hardware_name": "AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD",
+    "n_samples_measured": 50,
+    "median_decode_ms": 188.67,
+    "median_feature_extraction_ms": 1434.34,
+    "median_rf_inference_ms": 211.73,
+    "median_cnn_forward_ms": 28.26
+  }
+}

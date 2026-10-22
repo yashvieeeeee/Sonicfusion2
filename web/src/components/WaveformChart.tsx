@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import { Maximize2, Waves } from "lucide-react";
+import { Waves } from "lucide-react";
 
 interface WaveformChartProps {
   waveform: number[];
@@ -39,18 +39,22 @@ export default function WaveformChart({
 
     ctx.clearRect(0, 0, width, height);
 
-    // Background grid lines
-    ctx.strokeStyle = "rgba(51, 65, 85, 0.3)";
-    ctx.lineWidth = 1;
-    ctx.setLineDash([4, 4]);
+    // Warm canvas background
+    ctx.fillStyle = "#FAF7F2";
+    ctx.fillRect(0, 0, width, height);
 
-    // Zero amplitude line
+    // Gridlines in soft border
+    ctx.strokeStyle = "#E3DDD4";
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3, 3]);
+
+    // Center zero axis
     ctx.beginPath();
     ctx.moveTo(0, midY);
     ctx.lineTo(width, midY);
     ctx.stroke();
 
-    // +0.5 and -0.5 amplitude lines
+    // ±0.5 Amplitude guides
     ctx.beginPath();
     ctx.moveTo(0, midY - height * 0.25);
     ctx.lineTo(width, midY - height * 0.25);
@@ -59,42 +63,35 @@ export default function WaveformChart({
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // Draw waveform bars / envelope
+    // Draw waveform envelope in dusty plum with subtle density
     const numPoints = waveform.length;
     const step = width / numPoints;
 
-    const gradient = ctx.createLinearGradient(0, 0, 0, height);
-    gradient.addColorStop(0, "#06b6d4"); // cyan
-    gradient.addColorStop(0.5, "#6366f1"); // indigo
-    gradient.addColorStop(1, "#3b82f6"); // blue
-
-    ctx.fillStyle = gradient;
-    ctx.strokeStyle = "#818cf8";
-    ctx.lineWidth = 1.5;
+    ctx.fillStyle = "#76556F"; // Dusty plum
 
     for (let i = 0; i < numPoints; i++) {
       const x = i * step;
       const amp = Math.min(Math.abs(waveform[i]), 1.0);
-      const barHeight = amp * (height * 0.88);
+      const barHeight = amp * (height * 0.86);
       const y = midY - barHeight / 2;
 
-      ctx.fillRect(x, y, Math.max(step * 0.8, 1), Math.max(barHeight, 2));
+      ctx.fillRect(x, y, Math.max(step * 0.85, 1), Math.max(barHeight, 1.5));
     }
 
-    // Draw playhead if playing
+    // Playhead in muted coral
     if (durationSeconds > 0 && currentTime > 0) {
       const playX = (currentTime / durationSeconds) * width;
-      ctx.strokeStyle = "#f43f5e"; // rose playhead
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = "#D77C63"; // Muted coral
+      ctx.lineWidth = 1.75;
       ctx.beginPath();
       ctx.moveTo(playX, 0);
       ctx.lineTo(playX, height);
       ctx.stroke();
 
-      // Playhead handle
-      ctx.fillStyle = "#f43f5e";
+      // Precise playhead dot
+      ctx.fillStyle = "#D77C63";
       ctx.beginPath();
-      ctx.arc(playX, 6, 5, 0, Math.PI * 2);
+      ctx.arc(playX, 4, 3.5, 0, Math.PI * 2);
       ctx.fill();
     }
   }, [waveform, durationSeconds, currentTime]);
@@ -119,28 +116,30 @@ export default function WaveformChart({
   };
 
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-4">
+    <div className="editorial-panel p-5">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <Waves className="h-4 w-4 text-cyan-400" />
-          <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-            Amplitude Waveform (Peak Envelope)
-          </h4>
+          <Waves className="h-4 w-4 text-[#76556F]" />
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-[#27232B]">
+            Amplitude Waveform &amp; Peak Envelope
+          </h3>
         </div>
-        <div className="flex items-center gap-3 text-xs text-slate-400">
-          <span>{waveform.length} sampled points</span>
+        <div className="flex items-center gap-3 text-xs text-[#6B626E]">
+          <span className="font-mono text-[11px] text-[#76556F] bg-[#F0E8EE] px-2 py-0.5 rounded">
+            {waveform.length} Samples
+          </span>
           {hoverTime !== null && (
-            <span className="text-cyan-400 font-mono">
+            <span className="font-mono text-[#D77C63] text-[11px] tabular-nums">
               Hover: {hoverTime.toFixed(2)}s
             </span>
           )}
-          <span className="font-mono text-slate-300">
+          <span className="font-mono text-[#27232B] text-[11px] tabular-nums font-medium">
             {currentTime.toFixed(1)}s / {durationSeconds.toFixed(1)}s
           </span>
         </div>
       </div>
 
-      <div className="relative w-full h-36 bg-slate-950/70 rounded-lg overflow-hidden border border-slate-800/80 cursor-pointer">
+      <div className="relative w-full h-32 bg-[#FAF7F2] rounded border border-[#E3DDD4] overflow-hidden cursor-crosshair">
         <canvas
           ref={canvasRef}
           className="w-full h-full block"
@@ -148,19 +147,21 @@ export default function WaveformChart({
           onMouseLeave={() => setHoverTime(null)}
           onClick={handleClick}
         />
-        <div className="absolute left-2 top-1 text-[10px] font-mono text-slate-500 select-none">
+        <div className="absolute left-2 top-1 text-[9px] font-mono text-[#8E8692] select-none">
           +1.0
         </div>
-        <div className="absolute left-2 bottom-1 text-[10px] font-mono text-slate-500 select-none">
+        <div className="absolute left-2 bottom-1 text-[9px] font-mono text-[#8E8692] select-none">
           -1.0
         </div>
-        <div className="absolute right-2 bottom-1 text-[10px] font-mono text-slate-500 select-none">
+        <div className="absolute right-2 bottom-1 text-[9px] font-mono text-[#8E8692] select-none">
           {durationSeconds.toFixed(1)}s
         </div>
       </div>
-      <p className="text-[11px] text-slate-500 mt-2">
-        Downsampled peak envelope per §11. Click on the waveform to seek playback.
-      </p>
+
+      <div className="flex items-center justify-between mt-2.5 text-[10px] text-[#6B626E]">
+        <span>Standardized 22,050 Hz PCM envelope. Click waveform to seek playhead.</span>
+        <span className="font-mono text-[#76556F]">FMA 30s Crop</span>
+      </div>
     </div>
   );
 }

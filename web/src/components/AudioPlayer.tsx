@@ -98,7 +98,7 @@ export default function AudioPlayer({
   if (!audioUrl) return null;
 
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-900/90 p-3.5 backdrop-blur-md">
+    <div className="glass-floating rounded-lg p-3.5 transition-all">
       <audio
         ref={audioRef}
         src={audioUrl}
@@ -108,36 +108,38 @@ export default function AudioPlayer({
       />
 
       <div className="flex flex-col sm:flex-row items-center gap-3">
-        {/* Play/Pause Button */}
-        <div className="flex items-center gap-2">
+        {/* Play/Pause & Restart Controls */}
+        <div className="flex items-center gap-1.5 shrink-0">
           <button
             onClick={togglePlay}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 text-white hover:bg-indigo-500 shadow-md shadow-indigo-500/25 transition-transform hover:scale-105 active:scale-95"
+            className="flex h-9 w-9 items-center justify-center rounded-md bg-[#76556F] text-white hover:bg-[#583C52] active:scale-95 transition-all shadow-xs"
             title={isPlaying ? "Pause" : "Play"}
+            aria-label={isPlaying ? "Pause audio" : "Play audio"}
           >
             {isPlaying ? (
-              <Pause className="h-5 w-5" />
+              <Pause className="h-4 w-4" />
             ) : (
-              <Play className="h-5 w-5 ml-0.5" />
+              <Play className="h-4 w-4 ml-0.5 fill-current" />
             )}
           </button>
 
           <button
             onClick={restartAudio}
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
-            title="Restart"
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-[#E3DDD4] bg-[#FAF7F2] text-[#6B626E] hover:text-[#27232B] hover:bg-white transition-colors"
+            title="Restart playback"
+            aria-label="Restart audio"
           >
-            <RotateCcw className="h-4 w-4" />
+            <RotateCcw className="h-3.5 w-3.5" />
           </button>
         </div>
 
-        {/* Track Title and Slider */}
+        {/* Track Title and Seekbar */}
         <div className="flex-1 w-full min-w-0">
           <div className="flex items-center justify-between text-xs mb-1">
-            <span className="font-medium text-slate-200 truncate max-w-xs">
+            <span className="font-medium text-[#27232B] truncate max-w-sm">
               {filename}
             </span>
-            <span className="font-mono text-slate-400 text-[11px]">
+            <span className="font-mono text-[#6B626E] text-[11px] tabular-nums">
               {formatTime(currentTime)} / {formatTime(duration)}
             </span>
           </div>
@@ -149,21 +151,23 @@ export default function AudioPlayer({
             step={0.1}
             value={currentTime}
             onChange={handleSeekChange}
-            className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500 hover:accent-indigo-400"
+            aria-label="Seek audio"
+            className="w-full h-1.5 bg-[#EAE2D8] rounded-xs appearance-none cursor-pointer accent-[#D77C63]"
           />
         </div>
 
         {/* Volume button */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={toggleMute}
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-800 text-slate-400 hover:text-white transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-[#E3DDD4] bg-[#FAF7F2] text-[#6B626E] hover:text-[#27232B] hover:bg-white transition-colors"
             title={isMuted ? "Unmute" : "Mute"}
+            aria-label={isMuted ? "Unmute audio" : "Mute audio"}
           >
             {isMuted ? (
-              <VolumeX className="h-4 w-4 text-rose-400" />
+              <VolumeX className="h-3.5 w-3.5 text-[#D77C63]" />
             ) : (
-              <Volume2 className="h-4 w-4" />
+              <Volume2 className="h-3.5 w-3.5" />
             )}
           </button>
         </div>
