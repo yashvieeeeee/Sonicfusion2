@@ -124,6 +124,19 @@ export interface BaselineValidationMetrics {
   validation_macro_recall: number;
   classification_report: ClassificationReport;
   top_feature_importances: Record<string, number>;
+  adaboost_benchmark?: {
+    model_type: string;
+    base_estimator?: string;
+    best_params: {
+      n_estimators: number;
+      max_depth: number | null;
+    };
+    validation_accuracy: number;
+    validation_macro_f1: number;
+    validation_macro_precision?: number;
+    validation_macro_recall?: number;
+    dataset_context_note?: string;
+  };
 }
 
 export interface ConfusedPair {

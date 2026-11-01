@@ -19,8 +19,10 @@ from sklearn.pipeline import Pipeline
 from src.config import load_config, resolve_path
 from src.features.extraction import FEATURE_NAMES
 from src.models.baseline import (
+    build_adaboost_pipeline,
     build_baseline_pipeline,
     load_baseline_model,
+    tune_and_train_adaboost,
     tune_and_train_baseline,
 )
 
@@ -87,6 +89,14 @@ def test_baseline_validation_metrics_artifact(cfg):
     assert "test" not in metrics.get("best_params", {})
     assert "Evaluated strictly on the official FMA validation split" in metrics.get("note", "")
 
+    # If adaboost benchmark is present, verify its structure
+    if "adaboost_benchmark" in metrics:
+        ada = metrics["adaboost_benchmark"]
+        assert ada["model_type"] == "AdaBoostClassifier"
+        assert "validation_accuracy" in ada
+        assert "validation_macro_f1" in ada
+        assert "classification_report" in ada
+
 
 def test_baseline_tuning_selection_logic():
     """Verify that tune_and_train_baseline selects the hyperparameter set with highest val macro F1."""
@@ -124,3 +134,41 @@ def test_baseline_tuning_selection_logic():
     # The selected macro F1 must equal the maximum macro F1 in grid history
     best_f1_in_history = max(item["macro_f1"] for item in history)
     assert np.isclose(summary["validation_macro_f1"], best_f1_in_history)
+
+
+def test_adaboost_pipeline_and_tuning():
+    """Verify that AdaBoost pipeline builds correctly and selects best validation model."""
+    pipe = build_adaboost_pipeline(n_estimators=10, max_depth=1, random_state=42)
+    assert isinstance(pipe, Pipeline)
+    assert "imputer" in pipe.named_steps
+    assert "classifier" in pipe.named_steps
+
+    rng = np.random.default_rng(42)
+    n_train = 40
+    n_val = 20
+    n_features = len(FEATURE_NAMES)
+
+    X_train = rng.normal(size=(n_train, n_features))
+    y_train = np.array(["Rock"] * 20 + ["Pop"] * 20)
+    X_val = rng.normal(size=(n_val, n_features))
+    y_val = np.array(["Rock"] * 10 + ["Pop"] * 10)
+
+    param_grid = {
+        "n_estimators": [5, 10],
+        "max_depth": [1, 2],
+    }
+
+    best_pipe, summary = tune_and_train_adaboost(
+        X_train=X_train,
+        y_train=y_train,
+        X_val=X_val,
+        y_val=y_val,
+        param_grid=param_grid,
+        random_state=42,
+    )
+
+    assert isinstance(best_pipe, Pipeline)
+    assert summary["model_type"] == "AdaBoostClassifier"
+    assert len(summary["grid_search_history"]) == 4
+    assert 0.0 <= summary["validation_accuracy"] <= 1.0
+    assert 0.0 <= summary["validation_macro_f1"] <= 1.0

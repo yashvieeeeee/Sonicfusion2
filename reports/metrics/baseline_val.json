@@ -126,5 +126,137 @@
   ],
   "num_train_samples": 6394,
   "num_val_samples": 800,
-  "note": "Evaluated strictly on the official FMA validation split. The test split was not evaluated."
+  "note": "Evaluated strictly on the official FMA validation split. The test split was not evaluated.",
+  "adaboost_benchmark": {
+    "model_type": "AdaBoostClassifier",
+    "base_estimator": "DecisionTreeClassifier(max_depth=2)",
+    "best_params": {
+      "n_estimators": 100,
+      "max_depth": 2
+    },
+    "validation_accuracy": 0.4425,
+    "validation_macro_f1": 0.4398221053738439,
+    "validation_macro_precision": 0.4393885370043036,
+    "validation_macro_recall": 0.4425,
+    "classification_report": {
+      "Electronic": {
+        "precision": 0.33695652173913043,
+        "recall": 0.31,
+        "f1-score": 0.3229166666666667,
+        "support": 100.0
+      },
+      "Experimental": {
+        "precision": 0.45454545454545453,
+        "recall": 0.4,
+        "f1-score": 0.425531914893617,
+        "support": 100.0
+      },
+      "Folk": {
+        "precision": 0.5625,
+        "recall": 0.54,
+        "f1-score": 0.5510204081632653,
+        "support": 100.0
+      },
+      "Hip-Hop": {
+        "precision": 0.525,
+        "recall": 0.63,
+        "f1-score": 0.5727272727272728,
+        "support": 100.0
+      },
+      "Instrumental": {
+        "precision": 0.336283185840708,
+        "recall": 0.38,
+        "f1-score": 0.3568075117370892,
+        "support": 100.0
+      },
+      "International": {
+        "precision": 0.4479166666666667,
+        "recall": 0.43,
+        "f1-score": 0.4387755102040816,
+        "support": 100.0
+      },
+      "Pop": {
+        "precision": 0.14893617021276595,
+        "recall": 0.14,
+        "f1-score": 0.14432989690721648,
+        "support": 100.0
+      },
+      "Rock": {
+        "precision": 0.7029702970297029,
+        "recall": 0.71,
+        "f1-score": 0.7064676616915423,
+        "support": 100.0
+      },
+      "accuracy": 0.4425,
+      "macro avg": {
+        "precision": 0.4393885370043036,
+        "recall": 0.4425,
+        "f1-score": 0.4398221053738439,
+        "support": 800.0
+      },
+      "weighted avg": {
+        "precision": 0.4393885370043036,
+        "recall": 0.4425,
+        "f1-score": 0.4398221053738439,
+        "support": 800.0
+      }
+    },
+    "grid_search_history": [
+      {
+        "n_estimators": 50,
+        "max_depth": 1,
+        "accuracy": 0.37125,
+        "macro_f1": 0.37294025416508597
+      },
+      {
+        "n_estimators": 50,
+        "max_depth": 2,
+        "accuracy": 0.40875,
+        "macro_f1": 0.4065940870106344
+      },
+      {
+        "n_estimators": 50,
+        "max_depth": 3,
+        "accuracy": 0.40625,
+        "macro_f1": 0.4049236320610683
+      },
+      {
+        "n_estimators": 100,
+        "max_depth": 1,
+        "accuracy": 0.38625,
+        "macro_f1": 0.3835478473214589
+      },
+      {
+        "n_estimators": 100,
+        "max_depth": 2,
+        "accuracy": 0.4425,
+        "macro_f1": 0.4398221053738439
+      },
+      {
+        "n_estimators": 100,
+        "max_depth": 3,
+        "accuracy": 0.4125,
+        "macro_f1": 0.4136971932977797
+      },
+      {
+        "n_estimators": 200,
+        "max_depth": 1,
+        "accuracy": 0.40625,
+        "macro_f1": 0.39702213778107953
+      },
+      {
+        "n_estimators": 200,
+        "max_depth": 2,
+        "accuracy": 0.435,
+        "macro_f1": 0.43169874136653133
+      },
+      {
+        "n_estimators": 200,
+        "max_depth": 3,
+        "accuracy": 0.4325,
+        "macro_f1": 0.4316900139775037
+      }
+    ],
+    "dataset_context_note": "FMA Small consists of 8 balanced genre classes (Electronic, Experimental, Folk, Hip-Hop, Instrumental, International, Pop, Rock). In an 8-class problem, uniform random guess accuracy is only 12.5% (1/8). An accuracy of ~52% (Random Forest) and ~44% (AdaBoost) exceeds random chance by 3.5x to 4.2x. Tabular acoustic models trained on 51 summary statistics encounter a well-known representation ceiling on raw music audio, explaining why ensemble tree baselines cluster in the 44-52% accuracy range."
+  }
 }
