@@ -1,1 +1,1 @@
-"""SonicScope AI core package."""
+"""SonicFusion 2 core package."""

@@ -1,1 +1,1 @@
-"""SonicScope AI backend root package."""
+"""SonicFusion 2 backend root package."""

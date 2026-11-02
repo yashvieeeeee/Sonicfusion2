@@ -36,7 +36,7 @@ def run_stage(description: str, cmd: list[str]) -> None:
 
 def main() -> None:
     print("=" * 70)
-    print("   SONICSCOPE AI: COMPLETE DATASET PIPELINE (FMA SMALL ~8,000 TRACKS)  ")
+    print("   SONICFUSION 2: COMPLETE DATASET PIPELINE (FMA SMALL ~8,000 TRACKS)  ")
     print("=" * 70)
 
     # 1. Feature extraction

@@ -1,4 +1,4 @@
-"""FastAPI application entry point for Sonic Fusion.
+"""FastAPI application entry point for SonicFusion 2.
 
 Follows PLAN §13 FastAPI endpoint contract:
 - GET /api/health: Model readiness and service status.
@@ -39,7 +39,7 @@ from src.config import get_project_root, load_config, resolve_path
 
 
 app = FastAPI(
-    title="Sonic Fusion API",
+    title="SonicFusion 2 API",
     version="1.0.0",
     description="Music intelligence from MP3 audio: genre recognition, acoustic analysis, and interactive spectrograms.",
 )

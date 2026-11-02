@@ -205,7 +205,7 @@ def train_baseline(
 def _print_baseline_summary(metrics: Dict[str, Any]) -> None:
     """Print formatted summary of baseline validation metrics."""
     print("\n" + "=" * 60)
-    print("        SONICSCOPE AI: BASELINE VALIDATION RESULTS        ")
+    print("        SONICFUSION 2: BASELINE VALIDATION RESULTS        ")
     print("=" * 60)
     print(f"Primary Baseline     : RandomForestClassifier")
     print(f"Best Hyperparameters : {metrics['best_params']}")

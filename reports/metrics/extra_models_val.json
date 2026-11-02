@@ -1,0 +1,231 @@
+{
+  "timestamp": "2026-11-02T13:05:41.470045+00:00",
+  "random_state": 42,
+  "note": "Evaluated strictly on the official FMA validation split. The test split was not evaluated.",
+  "dataset": {
+    "num_train_tracks": 6394,
+    "num_val_tracks": 800,
+    "class_names": [
+      "Electronic",
+      "Experimental",
+      "Folk",
+      "Hip-Hop",
+      "Instrumental",
+      "International",
+      "Pop",
+      "Rock"
+    ],
+    "random_guess_accuracy": 0.125
+  },
+  "single_models": {
+    "random_forest": {
+      "model_type": "RandomForestClassifier",
+      "validation_accuracy": 0.5225,
+      "validation_macro_f1": 0.5073090702284373,
+      "validation_top_3_accuracy": 0.8225
+    },
+    "rbf_svc": {
+      "model_type": "SVC(kernel='rbf')",
+      "best_params": {
+        "C": 10,
+        "gamma": 0.01
+      },
+      "validation_accuracy": 0.53125,
+      "validation_macro_f1": 0.5237981166024579,
+      "validation_top_3_accuracy": 0.80375,
+      "grid_search_history": [
+        {
+          "params": {
+            "C": 1,
+            "gamma": "scale"
+          },
+          "macro_f1": 0.5143943703859781,
+          "accuracy": 0.5225,
+          "top_3_accuracy": 0.82625
+        },
+        {
+          "params": {
+            "C": 1,
+            "gamma": 0.01
+          },
+          "macro_f1": 0.5149504577681601,
+          "accuracy": 0.52375,
+          "top_3_accuracy": 0.83625
+        },
+        {
+          "params": {
+            "C": 1,
+            "gamma": 0.003
+          },
+          "macro_f1": 0.5077125268928583,
+          "accuracy": 0.52,
+          "top_3_accuracy": 0.8175
+        },
+        {
+          "params": {
+            "C": 3,
+            "gamma": "scale"
+          },
+          "macro_f1": 0.5112541389910271,
+          "accuracy": 0.51875,
+          "top_3_accuracy": 0.8175
+        },
+        {
+          "params": {
+            "C": 3,
+            "gamma": 0.01
+          },
+          "macro_f1": 0.5231450483100157,
+          "accuracy": 0.53,
+          "top_3_accuracy": 0.81
+        },
+        {
+          "params": {
+            "C": 3,
+            "gamma": 0.003
+          },
+          "macro_f1": 0.5112783733791415,
+          "accuracy": 0.52,
+          "top_3_accuracy": 0.82875
+        },
+        {
+          "params": {
+            "C": 10,
+            "gamma": "scale"
+          },
+          "macro_f1": 0.4891096098995082,
+          "accuracy": 0.4975,
+          "top_3_accuracy": 0.8125
+        },
+        {
+          "params": {
+            "C": 10,
+            "gamma": 0.01
+          },
+          "macro_f1": 0.5237981166024579,
+          "accuracy": 0.53125,
+          "top_3_accuracy": 0.80375
+        },
+        {
+          "params": {
+            "C": 10,
+            "gamma": 0.003
+          },
+          "macro_f1": 0.519057195590508,
+          "accuracy": 0.52625,
+          "top_3_accuracy": 0.82125
+        },
+        {
+          "params": {
+            "C": 30,
+            "gamma": "scale"
+          },
+          "macro_f1": 0.4916281579413216,
+          "accuracy": 0.4975,
+          "top_3_accuracy": 0.79125
+        },
+        {
+          "params": {
+            "C": 30,
+            "gamma": 0.01
+          },
+          "macro_f1": 0.4865796045286127,
+          "accuracy": 0.49375,
+          "top_3_accuracy": 0.81
+        },
+        {
+          "params": {
+            "C": 30,
+            "gamma": 0.003
+          },
+          "macro_f1": 0.5212475062177143,
+          "accuracy": 0.52875,
+          "top_3_accuracy": 0.815
+        }
+      ],
+      "saved_model_path": "models\\extra\\rbf_svc.joblib"
+    },
+    "extra_trees": {
+      "model_type": "ExtraTreesClassifier",
+      "best_params": {
+        "n_estimators": 400,
+        "max_features": "sqrt"
+      },
+      "validation_accuracy": 0.52125,
+      "validation_macro_f1": 0.5063226324073042,
+      "validation_top_3_accuracy": 0.8225,
+      "grid_search_history": [
+        {
+          "params": {
+            "n_estimators": 400,
+            "max_features": "sqrt"
+          },
+          "macro_f1": 0.5063226324073042,
+          "accuracy": 0.52125,
+          "top_3_accuracy": 0.8225
+        },
+        {
+          "params": {
+            "n_estimators": 400,
+            "max_features": 0.3
+          },
+          "macro_f1": 0.5038218880129204,
+          "accuracy": 0.51625,
+          "top_3_accuracy": 0.84125
+        }
+      ],
+      "saved_model_path": "models\\extra\\extra_trees.joblib"
+    },
+    "genre_cnn": {
+      "model_type": "GenreCNN",
+      "validation_accuracy": 0.585,
+      "validation_macro_f1": 0.5724356742065315,
+      "validation_top_3_accuracy": 0.8525
+    }
+  },
+  "ensembles": {
+    "rf_plus_svc": {
+      "models": [
+        "RandomForestClassifier",
+        "SVC(kernel='rbf')"
+      ],
+      "weights": [
+        0.5,
+        0.5
+      ],
+      "validation_accuracy": 0.53875,
+      "validation_macro_f1": 0.5283640662343474,
+      "validation_top_3_accuracy": 0.84125
+    },
+    "rf_plus_svc_plus_extratrees": {
+      "models": [
+        "RandomForestClassifier",
+        "SVC(kernel='rbf')",
+        "ExtraTreesClassifier"
+      ],
+      "weights": [
+        0.0,
+        0.25,
+        0.75
+      ],
+      "validation_accuracy": 0.55,
+      "validation_macro_f1": 0.538341463932431,
+      "validation_top_3_accuracy": 0.83625
+    },
+    "rf_plus_svc_plus_cnn": {
+      "models": [
+        "RandomForestClassifier",
+        "SVC(kernel='rbf')",
+        "GenreCNN"
+      ],
+      "weights": [
+        0.0,
+        0.4,
+        0.6
+      ],
+      "validation_accuracy": 0.62875,
+      "validation_macro_f1": 0.6197602080045903,
+      "validation_top_3_accuracy": 0.8575
+    }
+  }
+}

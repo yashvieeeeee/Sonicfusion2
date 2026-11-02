@@ -1,4 +1,4 @@
-# SonicScope AI: End-to-End Implementation Blueprint
+# SonicFusion 2: End-to-End Implementation Blueprint
 
 > **Project note:** This repository is the **SonicFusion 2** DSL (Data Science Lab) mini project. This file is a markdown transcription of `SonicScope_AI_Complete_Implementation_Plan.pdf` (v1.0, 17 October 2026) and is the **single source of truth**. Sections 00 to 22 follow the PDF. Project-specific decisions that are *not* in the PDF are listed in **Addendum A** at the end. Where the addendum and the PDF text conflict, the addendum wins.
 
@@ -37,7 +37,7 @@ Official FMA publisher instructions and checksums: https://github.com/mdeff/fma
 Exact folder layout for the first download:
 
 ```
-SonicScopeAI/
+SonicFusion2/
   data/
     downloads/
       fma_small.zip
@@ -90,7 +90,7 @@ Proceed in sequence and complete the verification gates before adding optional f
 
 ## 01 The product and academic scope
 
-SonicScope AI is a web application for extracting understandable musical intelligence from audio. Its unique mini-project contribution is the comparison between feature-engineered machine learning and image-like spectrogram deep learning.
+SonicFusion 2 is a web application for extracting understandable musical intelligence from audio. Its unique mini-project contribution is the comparison between feature-engineered machine learning and image-like spectrogram deep learning.
 
 **System flow:**
 
@@ -156,8 +156,8 @@ This is the definitive acquisition list. Download the mandatory two FMA ZIPs bef
 ### Windows PowerShell: first commands
 
 ```powershell
-mkdir SonicScopeAI
-cd SonicScopeAI
+mkdir SonicFusion2
+cd SonicFusion2
 git init
 mkdir data, models, reports, scripts, backend, references
 mkdir data/downloads, data/raw, data/processed, data/cache
@@ -240,7 +240,7 @@ unzip -q data/downloads/fma_metadata.zip -d data/raw
 ## 05 Repository structure and responsibilities
 
 ```
-SonicScopeAI/
+SonicFusion2/
   backend/
     app/
       main.py                # FastAPI entry point
@@ -533,7 +533,7 @@ Because exact semantic similarity has no direct labels in the FMA Small dataset,
   "rms_mean": 0.083,
   "estimated_key": null,
   "genre": {
-    "model": "sonicscope-cnn-v1",
+    "model": "sonicfusion2-cnn-v1",
     "top_label": "Electronic",
     "scores": [{"label": "Electronic", "score": 0.64}]
   },
@@ -862,4 +862,4 @@ Commit after each passing gate (after reading `git status`), never one big commi
 - By project decision, accepted inputs are widened to `allowed_formats: [mp3, wav, m4a]` and `max_duration_seconds: 900` (15 minutes), configured via `configs/config.yaml` and exposed dynamically through `GET /api/models`.
 - Demuxer selection is performed by magic bytes ("RIFF....WAVE" -> wav, "ftyp" -> mov, else mp3 candidate) with explicit `-f <demuxer>` passed to both ffprobe and ffmpeg, combined with `-protocol_whitelist file,pipe`.
 - Audio streams are explicitly verified (`codec_type == audio`), and only the first audio stream is decoded (`-map 0:a:0 -vn`).
-- Standardized inference and acoustic visualizations decode only up to the first 30 seconds (`-t 30.0`), strictly preserving PLAN §13 bounded processing.
+- Standardized inference and acoustic visualizations decode only up to the first 30 seconds (`-t 30.0`), strictly preserving PLAN §13 bounded processing.

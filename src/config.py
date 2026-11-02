@@ -1,4 +1,4 @@
-"""Configuration loader and utilities for SonicScope AI.
+"""Configuration loader and utilities for SonicFusion 2.
 
 Follows specifications from docs/PLAN.md (§05, §07, §08, §09, Addenda A3-A4).
 """

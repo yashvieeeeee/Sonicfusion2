@@ -207,7 +207,7 @@ def main() -> None:
         return
 
     print("=" * 60)
-    print("             SONICSCOPE AI: GENRE PREDICTION           ")
+    print("             SONICFUSION 2: GENRE PREDICTION           ")
     print("=" * 60)
     print(f"File             : {res['audio_file']}")
     print(f"Predicted Genre  : {res['predicted_genre']}")

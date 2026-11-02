@@ -1,4 +1,4 @@
-                                                """End-to-End System Smoke Test for SonicScope AI (SonicFusion 2).
+                                                """End-to-End System Smoke Test for SonicFusion 2.
 
 Follows docs/PLAN.md §17, §18, §22:
 Validates FFmpeg availability, configuration, dataset manifest & label map,
@@ -69,7 +69,7 @@ def create_in_memory_mp3(duration_sec: float = 3.0, sr: int = 22050, freq: float
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="SonicScope AI (SonicFusion 2) End-to-End Smoke Test")
+    parser = argparse.ArgumentParser(description="SonicFusion 2 End-to-End Smoke Test")
     parser.add_argument("--skip-api", action="store_true", help="Skip FastAPI HTTP endpoint verification")
     parser.add_argument("--verbose", action="store_true", help="Print detailed diagnostic messages")
     args = parser.parse_args()
