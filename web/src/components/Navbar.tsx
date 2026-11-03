@@ -32,7 +32,7 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
             model_loaded: false,
             version: "1.0",
             device: "cpu",
-            detail: "Cannot connect to FastAPI backend on port 8000",
+            detail: "Cannot connect to FastAPI backend service",
           });
           setIsChecking(false);
         }
